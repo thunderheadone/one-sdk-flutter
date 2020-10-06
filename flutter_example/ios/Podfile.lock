@@ -1,0 +1,29 @@
+PODS:
+  - Flutter (1.0.0)
+  - one_sdk_flutter (0.1.0):
+    - Flutter
+    - Thunderhead
+  - Thunderhead (5.3.2)
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - one_sdk_flutter (from `.symlinks/plugins/one_sdk_flutter/ios`)
+
+SPEC REPOS:
+  trunk:
+    - Thunderhead
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  one_sdk_flutter:
+    :path: ".symlinks/plugins/one_sdk_flutter/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  one_sdk_flutter: 64287dbbe097c14164ad5b12978a8c8a7bece5f1
+  Thunderhead: 5f31bf6926ea87fb9c99e81bc00722185d73e366
+
+PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
+
+COCOAPODS: 1.9.1

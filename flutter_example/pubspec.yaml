@@ -1,5 +1,5 @@
-name: thunderheaddemo_flutter_poc
-description: ONE SDK for Flutter POC Demo
+name: flutter_example
+description: ONE SDK for Flutter example integration
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -21,7 +21,9 @@ dependencies:
     sdk: flutter
 
   one_sdk_flutter:
-    path: ../one_sdk_flutter
+    git:
+      url: git://github.com/flutter/plugin1.git
+      path: one_sdk_flutter
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

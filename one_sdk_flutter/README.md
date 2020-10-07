@@ -7,7 +7,7 @@ To install the ONE Flutter Plugin, go to your `pubspec.yaml` and add the depende
 ```
 one_sdk_flutter:
   git:
-    url: git://github.com/thunderheadone/one-sdk-flutter.git
+    url: https://github.com/thunderheadone/one-sdk-ios.git
     path: one_sdk_flutter
 ```
 * See example [here](https://github.com/thunderheadone/one-sdk-flutter/tree/master/flutter_example/pubspec.yaml#L23)

@@ -16,6 +16,8 @@ one_sdk_flutter:
 ### Initialization
 To initialize the ONE Flutter Plugin, call the following method:
 ```javascript
+import 'package:one_sdk_flutter/one_sdk_flutter.dart';
+
 OnePlugin.initializeOne(SITE_KEY, TOUCHPOINT, API_KEY, SHARED_SECRET, USER_ID, HOST, false);
 ```
 * See example of usage [here](https://github.com/thunderheadone/one-sdk-flutter/tree/master/flutter_example/lib/main.dart#L58)

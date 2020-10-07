@@ -12,6 +12,8 @@ one_sdk_flutter:
 ```
 * See example [here](https://github.com/thunderheadone/one-sdk-flutter/tree/master/flutter_example/pubspec.yaml#L23)
 
+*Note:* Android integrations will require `MultiDex` to be enabled.  For information on how to enable this, see the Google documentation [here](https://developer.android.com/studio/build/multidex)
+
 ## Usage
 ### Initialization
 To initialize the ONE Flutter Plugin, call the following method:

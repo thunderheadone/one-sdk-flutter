@@ -65,9 +65,6 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-
-    OnePlugin.sendInteraction("/home");
-
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
@@ -128,7 +125,7 @@ class THImage extends StatelessWidget {
 
 class SecondRoute extends StatelessWidget {
   void _sendProperties(BuildContext context) async {
-    var statusCode = await OnePlugin.sendProperties("/flutterInteractionDemo", { 'key' : 'value' });
+    var statusCode = await OnePlugin.sendProperties("/secondRoute", { 'key' : 'value' });
     var alert = AlertDialog(
       title: Text("Status Code Result"),
       content: Text(statusCode.toString()),

@@ -1,31 +1,49 @@
 # one_sdk_flutter
 
-Thunderhead ONE SDK Flutter plugin 
+The ONE SDK Flutter Plugin for iOS and Android.
 
-## Getting Started
+## Installation
+To install the ONE Flutter Plugin, go to your `pubspec.yaml` and add the dependency:
+```
+one_sdk_flutter:
+  git:
+    url: git://github.com/thunderheadone/one-sdk-flutter.git
+    path: one_sdk_flutter
+```
+* See example [here](https://github.com/thunderheadone/one-sdk-flutter/tree/master/flutter_example/pubspec.yaml#L23)
 
-This project is a starting point for a Flutter Thunderhead Mobile SDK Plugin
+## Usage
+### Initialization
+To initialize the ONE Flutter Plugin, call the following method:
+```javascript
+OnePlugin.initializeOne(SITE_KEY, TOUCHPOINT, API_KEY, SHARED_SECRET, USER_ID, HOST, false);
+```
+* See example of usage [here](https://github.com/thunderheadone/one-sdk-flutter/tree/master/flutter_example/lib/main.dart#L58)
 
-### Setting up development environment
-1. Download Android Studio
-2. Install Flutter Plugin
-    * During install of the Flutter Plugin, enter the path to Flutter sdk
-    * If Flutter SDK is not installed:
-        1. Click the link to install Flutter SDK from the install Plugin dialog
-            * If not link, download flutter and unzip on mac
-        2. Be sure the install directory does not require admin privileges.
-3. In Android Studio, point Flutter path to Flutter install directory          
-4. Install Dart Plugin
+### Send an Interaction 
+To send an Interaction request without properties, call the following method:
+```javascript
+One.sendInteraction("/interactionPath");
+```
+* See example of usage [here](https://github.com/thunderheadone/one-sdk-flutter/tree/master/flutter_example/lib/main.dart#L60)
 
-### Running the Flutter Proof of Concept Application
-1. Open Android Project Folder (The Proof of Concept Application)
-2. Start an Emulator
-3. Run
+To send an Interaction request with properties, call the following method:
+```javascript
+OnePlugin.sendProperties("/interactionPath", { 'key' : 'value' });
+```
+* See example of usage [here](https://github.com/thunderheadone/one-sdk-flutter/tree/master/flutter_example/lib/main.dart#L128)
 
-### Contributing to the Flutter Plugin
-1. Open an instance of Android Studio
-    - The flutter POC and flutter plugin cannot be developed in the same Android Studio instance
-2. File->Open and navigate to the flutter plugin: one_sdk_flutter
-3. Edit/Modify as needed.
-4. To test, Run the POC as described in "Running the Flutter Proof of Concept Application"
-  
+### Access debug information
+To configure logging, call the following method:
+```javascript
+OnePlugin.setThunderheadLogLevel(true);
+```
+* See example of usage [here](https://github.com/thunderheadone/one-sdk-flutter/tree/master/flutter_example/lib/main.dart#L59)
+
+## Questions or need help
+
+### Thunderhead ONE Support
+_The Thunderhead team is available 24/7 to answer any questions you have. Just email onesupport@thunderhead.com or visit our docs page for more detailed installation and usage information._
+
+### Salesforce Interaction Studio Support
+_For Salesforce Marketing Cloud Interaction Studio questions, please submit a support ticket via https://help.salesforce.com/home_

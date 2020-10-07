@@ -1,16 +1,49 @@
-# thunderheaddemo_flutter_poc
+# one_sdk_flutter
 
-ONE SDK for Flutter POC Demo
+The ONE SDK Flutter Plugin for iOS and Android.
 
-## Getting Started
+## Installation
+To install the ONE Flutter Plugin, go to your `pubspec.yaml` and add the dependency:
+```
+one_sdk_flutter:
+  git:
+    url: git://github.com/thunderheadone/one-sdk-flutter.git
+    path: one_sdk_flutter
+```
+* See example [here](https://github.com/thunderheadone/one-sdk-flutter/tree/master/flutter_example/pubspec.yaml#L23)
 
-This project is a starting point for a Flutter application.
+## Usage
+### Initialization
+To initialize the ONE Flutter Plugin, call the following method:
+```javascript
+OnePlugin.initializeOne(SITE_KEY, TOUCHPOINT, API_KEY, SHARED_SECRET, USER_ID, HOST, false);
+```
+* See example of usage [here](https://github.com/thunderheadone/one-sdk-flutter/tree/master/flutter_example/lib/main.dart#L58)
 
-A few resources to get you started if this is your first Flutter project:
+### Send an Interaction 
+To send an Interaction request without properties, call the following method:
+```javascript
+One.sendInteraction("/interactionPath");
+```
+* See example of usage [here](https://github.com/thunderheadone/one-sdk-flutter/tree/master/flutter_example/lib/main.dart#L60)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+To send an Interaction request with properties, call the following method:
+```javascript
+OnePlugin.sendProperties("/interactionPath", { 'key' : 'value' });
+```
+* See example of usage [here](https://github.com/thunderheadone/one-sdk-flutter/tree/master/flutter_example/lib/main.dart#L128)
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+### Access debug information
+To configure logging, call the following method:
+```javascript
+OnePlugin.setThunderheadLogLevel(true);
+```
+* See example of usage [here](https://github.com/thunderheadone/one-sdk-flutter/tree/master/flutter_example/lib/main.dart#L59)
+
+## Questions or need help
+
+### Thunderhead ONE Support
+_The Thunderhead team is available 24/7 to answer any questions you have. Just email onesupport@thunderhead.com or visit our docs page for more detailed installation and usage information._
+
+### Salesforce Interaction Studio Support
+_For Salesforce Marketing Cloud Interaction Studio questions, please submit a support ticket via https://help.salesforce.com/home_

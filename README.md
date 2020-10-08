@@ -2,10 +2,9 @@
 
 # one-sdk-flutter
 
-Thunderhead Flutter Plugin. This repo contains the code for the released version of the Thunderhead Flutter Plugin.
+Thunderhead ONE SDK Flutter Plugin.
 
-## Table of Contents
-* The main plugin code base and documentation are found under the [`one_sdk_flutter`](https://github.com/thunderheadone/one-sdk-flutter/tree/master/one_sdk_flutter) folder. 
+* The main plugin code base and documentation are found under the [`one_sdk_flutter`](https://github.com/thunderheadone/one-sdk-flutter/tree/master/one_sdk_flutter) folder.
 * Example app with integration examples:
 	* [flutter-example](https://github.com/thunderheadone/one-sdk-flutter/tree/master/flutter_example)
 

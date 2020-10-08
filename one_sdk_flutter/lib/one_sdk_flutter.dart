@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 import 'package:flutter/services.dart';
 
-class OnePlugin {
+class One {
   static const MethodChannel _channel =
       const MethodChannel('one_sdk_flutter');
 
@@ -12,27 +12,15 @@ class OnePlugin {
   }
 
   static String get pluginVersion  {
-    return "Thunderhead 0.1.0.beta-1";
+    return "Thunderhead 0.1.0";
   }
 
-  static Future<void> sendInteraction(String interactionPath) async {
-    var interactionMap = <String, dynamic> {
-      'interactionPath' : interactionPath
-    };
-    var result = await _channel.invokeMethod('sendInteraction', interactionMap);
-    print(result);
-  }
-
-  static Future<int> sendProperties(String interactionPath, Map properties) async  {
+  static Future<String> sendInteraction(String interactionPath, Map properties) async  {
     var interactionPropertiesMap = <String, dynamic> {
       'interactionPath' : interactionPath,
       'properties' : properties
     };
-/*
-    var result =  _channel.invokeMethod('sendInteractionResponse', interactionMap);
-    return result;
-*/
-    return  _channel.invokeMethod('sendProperties', interactionPropertiesMap);
+    return _channel.invokeMethod('sendInteraction', interactionPropertiesMap);
   }
 
   static Future<void> setThunderheadLogLevel(bool allOrNone) async {

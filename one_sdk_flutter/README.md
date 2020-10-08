@@ -1,13 +1,13 @@
 # one_sdk_flutter
 
-The ONE SDK Flutter Plugin for iOS and Android.
+The Thunderhead ONE SDK Flutter Plugin for iOS and Android.
 
 ## Installation
-To install the ONE Flutter Plugin, go to your `pubspec.yaml` and add the dependency:
+To install the Thunderhead ONE Flutter Plugin, go to your `pubspec.yaml` and add the dependency:
 ```
 one_sdk_flutter:
   git:
-    url: https://github.com/thunderheadone/one-sdk-ios.git
+    url: https://github.com/thunderheadone/one-sdk-flutter.git
     path: one_sdk_flutter
 ```
 * See example [here](https://github.com/thunderheadone/one-sdk-flutter/tree/master/flutter_example/pubspec.yaml#L23)
@@ -20,27 +20,27 @@ To initialize the ONE Flutter Plugin, call the following method:
 ```javascript
 import 'package:one_sdk_flutter/one_sdk_flutter.dart';
 
-OnePlugin.initializeOne(SITE_KEY, TOUCHPOINT, API_KEY, SHARED_SECRET, USER_ID, HOST, false);
+One.initializeOne(SITE_KEY, TOUCHPOINT, API_KEY, SHARED_SECRET, USER_ID, HOST, false);
 ```
 * See example of usage [here](https://github.com/thunderheadone/one-sdk-flutter/tree/master/flutter_example/lib/main.dart#L58)
 
 ### Send an Interaction 
 To send an Interaction request without properties, call the following method:
 ```javascript
-One.sendInteraction("/interactionPath");
+One.sendInteraction("/interactionPath", null);
 ```
 * See example of usage [here](https://github.com/thunderheadone/one-sdk-flutter/tree/master/flutter_example/lib/main.dart#L60)
 
 To send an Interaction request with properties, call the following method:
 ```javascript
-OnePlugin.sendProperties("/interactionPath", { 'key' : 'value' });
+One.sendInteraction("/interactionPath", { 'key' : 'value' });
 ```
 * See example of usage [here](https://github.com/thunderheadone/one-sdk-flutter/tree/master/flutter_example/lib/main.dart#L128)
 
 ### Access debug information
 To configure logging, call the following method:
 ```javascript
-OnePlugin.setThunderheadLogLevel(true);
+One.setThunderheadLogLevel(true);
 ```
 * See example of usage [here](https://github.com/thunderheadone/one-sdk-flutter/tree/master/flutter_example/lib/main.dart#L59)
 

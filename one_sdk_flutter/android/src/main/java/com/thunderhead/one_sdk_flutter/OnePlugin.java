@@ -43,92 +43,57 @@ public class OnePlugin implements MethodCallHandler {
     } else if (call.method.equals("sendInteraction")) {
       final Map<String, Object> arguments = call.arguments();
       String interactionPath = (String) arguments.get("interactionPath");
-      try {
-        sendInteraction(interactionPath, result);
-      } catch (Exception e) {
-        result.error("Failed to send interaction", e.getLocalizedMessage(), e);
-      }
-
-    } else if (call.method.equals("sendProperties")) {
-      final Map<String, Object> arguments = call.arguments();
-      String interactionPath = (String) arguments.get("interactionPath");
       HashMap<String, Object> properties = (HashMap) arguments.get("properties");
       try {
-        sendProperties(interactionPath, properties, result);
+        sendInteraction(interactionPath, properties, result);
       } catch (Exception e) {
         result.error("Failed to send interaction", e.getLocalizedMessage(), e);
       }
 
     } else if (call.method.equals("setLogLevel")) {
-      final Map<String, Boolean> arguments = call.arguments();
-      Boolean allOrNone = arguments.get("logLevel");
-      if (allOrNone == null) {
-        allOrNone = true;
-      }
-      One.setLogLevel(allOrNone ? OneLogLevel.ALL : OneLogLevel.NONE);
-      Log.d(LOG_TAG, "Set Thunderhead LogLevel.");
-      result.success("Set Thunderhead LogLevel.");
+      setLogLevel(call, result);
     } else if (call.method.equals("initializeOne")) {
-      final Map<String, Object> arguments = call.arguments();
-      String siteKey = (String) arguments.get("siteKey");
-      String touchpointURI = (String) arguments.get("touchpoint");
-      String apiKey = (String) arguments.get("apiKey");
-      String sharedSecret = (String) arguments.get("sharedSecret");
-      String userId = (String) arguments.get("userID");
-      String host = (String) arguments.get("host");
-      boolean adminMode = (Boolean) arguments.get("adminMode");
-
-      final OneConfiguration oneConfiguration = new OneConfiguration.Builder()
-              .siteKey(siteKey)
-              .apiKey(apiKey)
-              .sharedSecret(sharedSecret)
-              .userId(userId)
-              .host(URI.create(host))
-              .touchpoint(URI.create(touchpointURI))
-              .mode(adminMode ? OneModes.ADMIN_MODE : OneModes.USER_MODE)
-              .build();
-      One.setConfiguration(oneConfiguration);
-
-      Log.d(LOG_TAG, "Configuring Thunderhead One Plugin");
-      result.success("Configured Thunderhead One Plugin successfully.");
-
+      initializeOne(call, result);
     } else {
       result.notImplemented();
 
     }
   }
 
-  private void sendInteraction(String interactionPath, final Result result) {
-    Log.d(LOG_TAG, "Send Interaction: " + interactionPath);
+  private void initializeOne(MethodCall call, final Result result) {
+    final Map<String, Object> arguments = call.arguments();
+    String siteKey = (String) arguments.get("siteKey");
+    String touchpointURI = (String) arguments.get("touchpoint");
+    String apiKey = (String) arguments.get("apiKey");
+    String sharedSecret = (String) arguments.get("sharedSecret");
+    String userId = (String) arguments.get("userID");
+    String host = (String) arguments.get("host");
+    boolean adminMode = (Boolean) arguments.get("adminMode");
 
-    final OneRequest sendInteractionRequest = new OneRequest.Builder()
-            .interactionPath(new OneInteractionPath(URI.create(interactionPath)))
+    final OneConfiguration oneConfiguration = new OneConfiguration.Builder()
+            .siteKey(siteKey)
+            .apiKey(apiKey)
+            .sharedSecret(sharedSecret)
+            .userId(userId)
+            .host(URI.create(host))
+            .touchpoint(URI.create(touchpointURI))
+            .mode(adminMode ? OneModes.ADMIN_MODE : OneModes.USER_MODE)
             .build();
-    final OneCall sendInteractionCall = One.sendInteraction(sendInteractionRequest);
-    sendInteractionCall.enqueue(new OneCallback() {
-      @Override
-      public void onSuccess(OneResponse response) {
-        One.processResponse(response);
-        result.success(response.getHttpStatusCode());
-      }
-
-      @Override
-      public void onError(OneSDKError error) {
-        result.error(Integer.toString(error.getSystemCode()), error.getLocalizedMessage(), error);
-        Log.e(LOG_TAG, "SDK Error: " +  error.getErrorMessage());
-      }
-
-      @Override
-      public void onFailure(OneAPIError error) {
-        result.error(Integer.toString(error.getHttpStatusCode()), error.getLocalizedMessage(), error);
-        Log.e(LOG_TAG, "Api Error: " +  error.getErrorMessage());
-      }
-    });
+    One.setConfiguration(oneConfiguration);
+    result.success(true);
   }
 
-  private void sendProperties(String interactionPath, HashMap properties, final Result result) {
-    Log.d(LOG_TAG, "Send Interaction: " + interactionPath + " with properties: " + properties);
+  private void setLogLevel(MethodCall call, final Result result) {
+    final Map<String, Boolean> arguments = call.arguments();
+    Boolean allOrNone = arguments.get("logLevel");
+    if (allOrNone == null) {
+      allOrNone = true;
+    }
+    One.setLogLevel(allOrNone ? OneLogLevel.ALL : OneLogLevel.NONE);
+    result.success("Set Thunderhead LogLevel: " + (allOrNone ? "Enabled" : "Disabled"));
+  }
 
+  private void sendInteraction(String interactionPath, HashMap properties, final Result result) {
     final OneRequest sendInteractionRequest = new OneRequest.Builder()
             .interactionPath(new OneInteractionPath(URI.create(interactionPath)))
             .properties(properties)
@@ -137,9 +102,9 @@ public class OnePlugin implements MethodCallHandler {
     final OneCall sendInteractionCall = One.sendInteraction(sendInteractionRequest);
     sendInteractionCall.enqueue(new OneCallback() {
       @Override
-      public void onSuccess(OneResponse response) {
+      public void onSuccess(final OneResponse response) {
         One.processResponse(response);
-        result.success(response.getHttpStatusCode());
+        result.success(response.getTid());
       }
 
       @Override

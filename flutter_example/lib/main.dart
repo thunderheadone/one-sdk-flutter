@@ -55,9 +55,9 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    OnePlugin.initializeOne(SITE_KEY, TOUCHPOINT, API_KEY, SHARED_SECRET, USER_ID, HOST, false);
-    OnePlugin.setThunderheadLogLevel(true);
-    OnePlugin.sendInteraction("/home");
+    One.initializeOne(SITE_KEY, TOUCHPOINT, API_KEY, SHARED_SECRET, USER_ID, HOST, false);
+    One.setThunderheadLogLevel(true);
+    One.sendInteraction("/home", null);
   }
 
   @override
@@ -103,8 +103,8 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator
                     .push(context, MaterialPageRoute(builder: (context) => SecondRoute()))
-                    // Send Interaction each time this view appears after Route is popped.
-                    .then((value) => OnePlugin.sendInteraction("/home"));
+                    // Send Interaction each time this view appears (when SecondRoute is popped of the view stack and returns to this view).
+                    .then((value) => One.sendInteraction("/home", null));
               },
             ),
           ],
@@ -124,11 +124,11 @@ class THImage extends StatelessWidget {
 }
 
 class SecondRoute extends StatelessWidget {
-  void _sendProperties(BuildContext context) async {
-    var statusCode = await OnePlugin.sendProperties("/secondRoute", { 'key' : 'value' });
+  void _sendInteraction(BuildContext context) async {
+    var tid = await One.sendInteraction("/secondPageButton", { 'email' : 'user@address.com' });
     var alert = AlertDialog(
-      title: Text("Status Code Result"),
-      content: Text(statusCode.toString()),
+      title: Text("Tid Result"),
+      content: Text(tid),
     );
 
     showDialog(
@@ -141,14 +141,16 @@ class SecondRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    One.sendInteraction("/secondPage", null);
+
     return Scaffold(
-      appBar: AppBar(title: Text("")),
+      appBar: AppBar(title: Text("Second Page")),
       body: Center(
         child: Text("Navigate back to send a new interaction request."),
       ),
       floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
-            _sendProperties(context);
+            _sendInteraction(context);
           },
           label: Text('Send Interaction')
       )

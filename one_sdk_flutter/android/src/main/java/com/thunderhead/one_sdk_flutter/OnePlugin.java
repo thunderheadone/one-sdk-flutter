@@ -27,6 +27,8 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 /** OnePlugin */
 public class OnePlugin implements MethodCallHandler {
+  protected static final String LOG_TAG = "OnePlugin";
+
   /** Plugin registration. */
   public static void registerWith(Registrar registrar) {
     final MethodChannel channel = new MethodChannel(registrar.messenger(), "one_sdk_flutter");

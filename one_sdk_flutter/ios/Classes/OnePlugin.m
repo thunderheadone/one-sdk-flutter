@@ -72,7 +72,7 @@
                                            details:error.localizedDescription]);
             } else {
                 [One processResponse:response];
-                result(responseDict[@"tid"]);
+                result(response[@"tid"]);
             }
         }];
     } else {
@@ -83,7 +83,7 @@
                                            details:error.localizedDescription]);
             } else {
                 [One processResponse:response];
-                result(responseDict[@"tid"]);
+                result(response[@"tid"]);
             }
         }];
     }

@@ -16,6 +16,6 @@ void main() {
   });
 
   test('getPlatformVersion', () async {
-    expect(await OnePlugin.platformVersion, '42');
+    expect(await One.platformVersion, '42');
   });
 }

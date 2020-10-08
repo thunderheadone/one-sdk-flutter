@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 import 'package:flutter/services.dart';
 
-class OnePlugin {
+class One {
   static const MethodChannel _channel =
       const MethodChannel('one_sdk_flutter');
 

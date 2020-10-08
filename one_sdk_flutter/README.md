@@ -20,7 +20,7 @@ To initialize the ONE Flutter Plugin, call the following method:
 ```javascript
 import 'package:one_sdk_flutter/one_sdk_flutter.dart';
 
-OnePlugin.initializeOne(SITE_KEY, TOUCHPOINT, API_KEY, SHARED_SECRET, USER_ID, HOST, false);
+One.initializeOne(SITE_KEY, TOUCHPOINT, API_KEY, SHARED_SECRET, USER_ID, HOST, false);
 ```
 * See example of usage [here](https://github.com/thunderheadone/one-sdk-flutter/tree/master/flutter_example/lib/main.dart#L58)
 
@@ -33,14 +33,14 @@ One.sendInteraction("/interactionPath", null);
 
 To send an Interaction request with properties, call the following method:
 ```javascript
-OnePlugin.sendInteraction("/interactionPath", { 'key' : 'value' });
+One.sendInteraction("/interactionPath", { 'key' : 'value' });
 ```
 * See example of usage [here](https://github.com/thunderheadone/one-sdk-flutter/tree/master/flutter_example/lib/main.dart#L128)
 
 ### Access debug information
 To configure logging, call the following method:
 ```javascript
-OnePlugin.setThunderheadLogLevel(true);
+One.setThunderheadLogLevel(true);
 ```
 * See example of usage [here](https://github.com/thunderheadone/one-sdk-flutter/tree/master/flutter_example/lib/main.dart#L59)
 

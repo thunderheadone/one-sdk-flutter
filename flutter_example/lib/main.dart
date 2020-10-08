@@ -55,9 +55,9 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    OnePlugin.initializeOne(SITE_KEY, TOUCHPOINT, API_KEY, SHARED_SECRET, USER_ID, HOST, false);
-    OnePlugin.setThunderheadLogLevel(true);
-    OnePlugin.sendInteraction("/home", null);
+    One.initializeOne(SITE_KEY, TOUCHPOINT, API_KEY, SHARED_SECRET, USER_ID, HOST, false);
+    One.setThunderheadLogLevel(true);
+    One.sendInteraction("/home", null);
   }
 
   @override
@@ -104,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator
                     .push(context, MaterialPageRoute(builder: (context) => SecondRoute()))
                     // Send Interaction each time this view appears (when SecondRoute is popped of the view stack and returns to this view).
-                    .then((value) => OnePlugin.sendInteraction("/home", null));
+                    .then((value) => One.sendInteraction("/home", null));
               },
             ),
           ],
@@ -125,7 +125,7 @@ class THImage extends StatelessWidget {
 
 class SecondRoute extends StatelessWidget {
   void _sendInteraction(BuildContext context) async {
-    var tid = await OnePlugin.sendInteraction("/secondPageButton", { 'email' : 'user@address.com' });
+    var tid = await One.sendInteraction("/secondPageButton", { 'email' : 'user@address.com' });
     var alert = AlertDialog(
       title: Text("Tid Result"),
       content: Text(tid),
@@ -141,7 +141,7 @@ class SecondRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    OnePlugin.sendInteraction("/secondPage", null);
+    One.sendInteraction("/secondPage", null);
 
     return Scaffold(
       appBar: AppBar(title: Text("Second Page")),

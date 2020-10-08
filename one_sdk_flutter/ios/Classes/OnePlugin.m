@@ -20,8 +20,6 @@
       [self setLogLevel:call result:result];
   } else if ([@"sendInteraction" isEqualToString:call.method]) {
       [self sendInteraction:call result:result];
-  } else if ([@"sendProperties" isEqualToString:call.method]) {
-      [self sendInteraction:call result:result];
   } else {
     result(FlutterMethodNotImplemented);
   }
@@ -57,12 +55,7 @@
     result(nil);
 }
 
-- (void)sendInteraction:(FlutterMethodCall *)call result:(FlutterResult) result
-{
-    [self sendProperties:call result:result];
-}
-
-- (void)sendProperties:(FlutterMethodCall*)call result:(FlutterResult) result
+- (void)sendInteraction:(FlutterMethodCall*)call result:(FlutterResult) result
 {
     NSString *interactionPath = call.arguments[@"interactionPath"];
     NSDictionary *properties = call.arguments[@"properties"];
@@ -79,7 +72,7 @@
                                            details:error.localizedDescription]);
             } else {
                 [One processResponse:response];
-                result(response[@"statusCode"]);
+                result(responseDict[@"tid"]);
             }
         }];
     } else {
@@ -89,7 +82,8 @@
                                            message:error.domain
                                            details:error.localizedDescription]);
             } else {
-                result(response[@"statusCode"]);
+                [One processResponse:response];
+                result(responseDict[@"tid"]);
             }
         }];
     }

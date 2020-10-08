@@ -3,7 +3,7 @@
 A flutter example to demonstrate how to integrate and use the Thunderhead ONE Flutter Plugin.
 
 #### Install Flutter
-In order to get started and run this example app, you'll need [Flutter](See https://flutter.dev/docs/get-started/install) installed.
+In order to get started and run this example app, you'll need [Flutter](https://flutter.dev/docs/get-started/install) installed.
 
 #### Configure the Example app 
 Open [main.dart](https://github.com/thunderheadone/one-sdk-flutter/blob/1067438e6cba71215e871886cfba4b3a89f656aa/flutter_example/lib/main.dart#L48)

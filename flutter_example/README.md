@@ -34,8 +34,6 @@ To run the app in:
 * Xcode: navigate to the `ios` folder and open `Runner.xcworkspace`.
 * A Flutter supported editor: please see https://flutter.dev/docs/get-started/editor.
 
-To run 
-
 #### Run the Android app
 To run the app in:
 * Terminal: open the iOS simulator and run the following command:

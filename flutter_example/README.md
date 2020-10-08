@@ -20,7 +20,7 @@ to initialize the SDK using the integration parameters specific to your ONE envi
 * For more information on finding these parameters, see [Find the Information required when Integrating ONE with your Mobile Solutions](https://na5.thunderhead.com/one/help/conversations/how-do-i/mobile/one_integrate_mobile_find_integration_info/)
 
 #### Install the Thunderhead ONE Flutter Plugin
-From terminal, in the example app folder, run the following command:
+From terminal, in the example app's root folder, run the following command:
 ```
 $ flutter pub get
 ```
@@ -28,9 +28,9 @@ $ flutter pub get
 #### Run the iOS app
 To run the app in:
 * Terminal: open the iOS simulator and run the following command:
-```
-$ flutter run
-```
+    ```
+    $ flutter run
+    ```
 * Xcode: navigate to the `ios` folder and open `Runner.xcworkspace`.
 * A Flutter supported editor: please see https://flutter.dev/docs/get-started/editor.
 
@@ -39,9 +39,9 @@ To run
 #### Run the Android app
 To run the app in:
 * Terminal: open the iOS simulator and run the following command:
-```
-$ flutter run
-```
+    ```
+    $ flutter run
+    ```
 * Android Studio: navigate to the `android` folder and open `build.gradle`.
 * A Flutter supported editor: please see https://flutter.dev/docs/get-started/editor.
 

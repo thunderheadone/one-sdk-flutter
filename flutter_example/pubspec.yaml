@@ -23,7 +23,6 @@ dependencies:
   one_sdk_flutter:
     git:
       url: https://github.com/thunderheadone/one-sdk-flutter.git
-      path: one_sdk_flutter
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

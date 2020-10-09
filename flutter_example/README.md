@@ -38,7 +38,7 @@ For more information on running the flutter app on mobile, see the [Flutter docu
 
 #### Run the Android app
 To run the app in:
-* Terminal: Have the Android running and run the following command:
+* Terminal: Have the Android emulator running and run the following command:
     ```
     $ flutter run
     ```

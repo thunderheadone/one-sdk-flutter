@@ -27,21 +27,25 @@ $ flutter pub get
 
 #### Run the iOS app
 To run the app in:
-* Terminal: open the iOS simulator and run the following command:
+* Terminal: Have the iOS simulator running and then run the following command:
     ```
     $ flutter run
     ```
 * Xcode: navigate to the `ios` folder and open `Runner.xcworkspace`.
 * A Flutter supported editor: please see https://flutter.dev/docs/get-started/editor.
 
+For more information on running the flutter app on mobile, see the [Flutter documentation](https://flutter.dev/docs/get-started/test-drive).
+
 #### Run the Android app
 To run the app in:
-* Terminal: open the iOS simulator and run the following command:
+* Terminal: Have the Android running and run the following command:
     ```
     $ flutter run
     ```
 * Android Studio: navigate to the `android` folder and open `build.gradle`.
 * A Flutter supported editor: please see https://flutter.dev/docs/get-started/editor.
+
+For more information on running the flutter app on mobile, see the [Flutter documentation](https://flutter.dev/docs/get-started/test-drive).
 
 ## Questions or need help
 

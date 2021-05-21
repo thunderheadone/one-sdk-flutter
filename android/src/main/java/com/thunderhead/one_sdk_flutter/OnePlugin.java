@@ -24,15 +24,36 @@ import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
+import io.flutter.plugin.common.FlutterPlugin;
 
 /** OnePlugin */
-public class OnePlugin implements MethodCallHandler {
+public class OnePlugin implements MethodCallHandler, FlutterPlugin {
   protected static final String LOG_TAG = "OnePlugin";
 
   /** Plugin registration. */
+  /** We are keeping the registerWith() method to remain compatible with apps that don’t use the v2 Android embedding */
+  @SuppressWarnings("deprecation")
   public static void registerWith(Registrar registrar) {
-    final MethodChannel channel = new MethodChannel(registrar.messenger(), "one_sdk_flutter");
-    channel.setMethodCallHandler(new OnePlugin());
+    final OnePlugin instance = new OnePlugin();
+    instance.onAttachedToEngine(registrar.context(), registrar.messenger());
+  }
+
+  @Override
+  public void onAttachedToEngine(FlutterPluginBinding binding) {
+    onAttachedToEngine(binding.getApplicationContext(), binding.getBinaryMessenger());
+  }
+
+  private void onAttachedToEngine(Context applicationContext, BinaryMessenger messenger) {
+    this.applicationContext = applicationContext;
+    methodChannel = new MethodChannel(messenger, "one_sdk_flutter");
+    methodChannel.setMethodCallHandler(this);
+  }
+
+  @Override
+  public void onDetachedFromEngine(FlutterPluginBinding binding) {
+    applicationContext = null;
+    methodChannel.setMethodCallHandler(null);
+    methodChannel = null;
   }
 
   @Override

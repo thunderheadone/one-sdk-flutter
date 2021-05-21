@@ -31,6 +31,7 @@ public class OnePlugin implements MethodCallHandler, FlutterPlugin {
   protected static final String LOG_TAG = "OnePlugin";
 
   /** Plugin registration. */
+  /** We are keeping the registerWith() method to remain compatible with apps that don’t use the v2 Android embedding */
   @SuppressWarnings("deprecation")
   public static void registerWith(Registrar registrar) {
     final OnePlugin instance = new OnePlugin();

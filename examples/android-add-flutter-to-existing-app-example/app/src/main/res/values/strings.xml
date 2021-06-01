@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Add Flutter To Existing App Example</string>
+    <string name="title_native_view">Native View</string>
+    <string name="title_flutter_view">Flutter View</string>
+</resources>

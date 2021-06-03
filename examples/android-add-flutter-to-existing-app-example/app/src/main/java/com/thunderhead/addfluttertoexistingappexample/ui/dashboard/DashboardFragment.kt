@@ -1,45 +1,30 @@
 package com.thunderhead.addfluttertoexistingappexample.ui.dashboard
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+
 import com.thunderhead.addfluttertoexistingappexample.R
-import com.thunderhead.addfluttertoexistingappexample.databinding.FragmentDashboardBinding
+import io.flutter.embedding.android.FlutterFragment
+import io.flutter.embedding.android.RenderMode
+import io.flutter.embedding.android.TransparencyMode
+import io.flutter.embedding.engine.FlutterEngine
+import io.flutter.embedding.engine.FlutterEngineCache
 
-class DashboardFragment : Fragment() {
 
-    private lateinit var dashboardViewModel: DashboardViewModel
-    private var _binding: FragmentDashboardBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-        dashboardViewModel =
-                ViewModelProvider(this).get(DashboardViewModel::class.java)
-
-        _binding = FragmentDashboardBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        val textView: TextView = binding.textDashboard
-        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-        return root
+class DashboardFragment : FlutterFragment() {
+    // Fixes crash on FlutterFragment related to Navigation component.
+    // https://github.com/flutter/flutter/issues/45793
+    override fun onAttach(context: Context) {
+        arguments = Bundle().apply {
+            putString("", "")
+        }
+        super.onAttach(context)
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun getCachedEngineId(): String? {
+        return "my_engine_id"
     }
 }

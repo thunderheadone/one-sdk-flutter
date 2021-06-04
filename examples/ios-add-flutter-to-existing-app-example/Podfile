@@ -6,7 +6,7 @@ target 'Add Flutter to Existing App Example' do
   use_frameworks!
 
   # Pods for Add Flutter to Existing App Example
-  flutter_application_path = '../flutter_module'
+  flutter_application_path = '../flutter_example'
   load File.join(flutter_application_path, '.ios', 'Flutter', 'podhelper.rb')
   
   install_all_flutter_pods(flutter_application_path)

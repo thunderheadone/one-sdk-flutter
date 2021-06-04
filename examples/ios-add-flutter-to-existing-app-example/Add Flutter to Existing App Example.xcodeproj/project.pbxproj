@@ -199,7 +199,7 @@
 			buildConfigurationList = 461D7BBB2668651A00527B24 /* Build configuration list for PBXNativeTarget "Add Flutter to Existing App Example" */;
 			buildPhases = (
 				618B166C7F506D999B0BDCFF /* [CP] Check Pods Manifest.lock */,
-				84FE4A5D2EB52B7897B39B81 /* [CP-User] Run Flutter Build flutter_module Script */,
+				4F0976E464E4CE1CD1A8FCE3 /* [CP-User] Run Flutter Build flutter_example Script */,
 				461D7B8D2668651500527B24 /* Sources */,
 				461D7B8E2668651500527B24 /* Frameworks */,
 				461D7B8F2668651500527B24 /* Resources */,
@@ -220,7 +220,7 @@
 			buildConfigurationList = 461D7BBE2668651A00527B24 /* Build configuration list for PBXNativeTarget "Add Flutter to Existing App ExampleTests" */;
 			buildPhases = (
 				7542FE8C7FE66325BCD47A6A /* [CP] Check Pods Manifest.lock */,
-				A2A03526C86AE8B215F77457 /* [CP-User] Run Flutter Build flutter_module Script */,
+				72C36ED34430D92A68EB5959 /* [CP-User] Run Flutter Build flutter_example Script */,
 				461D7BA32668651A00527B24 /* Sources */,
 				461D7BA42668651A00527B24 /* Frameworks */,
 				461D7BA52668651A00527B24 /* Resources */,
@@ -242,7 +242,7 @@
 			buildConfigurationList = 461D7BC12668651A00527B24 /* Build configuration list for PBXNativeTarget "Add Flutter to Existing App ExampleUITests" */;
 			buildPhases = (
 				0D9BC61EC40D3CB42FF35661 /* [CP] Check Pods Manifest.lock */,
-				4F4DC115E365A62AAC2778C8 /* [CP-User] Run Flutter Build flutter_module Script */,
+				57F423BF048F86FC841AE3AB /* [CP-User] Run Flutter Build flutter_example Script */,
 				461D7BAE2668651A00527B24 /* Sources */,
 				461D7BAF2668651A00527B24 /* Frameworks */,
 				461D7BB02668651A00527B24 /* Resources */,
@@ -368,15 +368,37 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		4F4DC115E365A62AAC2778C8 /* [CP-User] Run Flutter Build flutter_module Script */ = {
+		4F0976E464E4CE1CD1A8FCE3 /* [CP-User] Run Flutter Build flutter_example Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			name = "[CP-User] Run Flutter Build flutter_module Script";
+			inputPaths = (
+				"${SRCROOT}/../flutter_example/.metadata",
+				"${SRCROOT}/../flutter_example/.ios/Flutter/App.framework/App",
+				"${SRCROOT}/../flutter_example/.ios/Flutter/engine/Flutter.framework/Flutter",
+				"${SRCROOT}/../flutter_example/.ios/Flutter/flutter_export_environment.sh",
+			);
+			name = "[CP-User] Run Flutter Build flutter_example Script";
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -e\nset -u\nsource \"${SRCROOT}/../flutter_module/.ios/Flutter/flutter_export_environment.sh\"\nexport VERBOSE_SCRIPT_LOGGING=1 && \"$FLUTTER_ROOT\"/packages/flutter_tools/bin/xcode_backend.sh build";
+			shellScript = "set -e\nset -u\nsource \"${SRCROOT}/../flutter_example/.ios/Flutter/flutter_export_environment.sh\"\n\"$FLUTTER_ROOT\"/packages/flutter_tools/bin/xcode_backend.sh build";
+		};
+		57F423BF048F86FC841AE3AB /* [CP-User] Run Flutter Build flutter_example Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/../flutter_example/.metadata",
+				"${SRCROOT}/../flutter_example/.ios/Flutter/App.framework/App",
+				"${SRCROOT}/../flutter_example/.ios/Flutter/engine/Flutter.framework/Flutter",
+				"${SRCROOT}/../flutter_example/.ios/Flutter/flutter_export_environment.sh",
+			);
+			name = "[CP-User] Run Flutter Build flutter_example Script";
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\nset -u\nsource \"${SRCROOT}/../flutter_example/.ios/Flutter/flutter_export_environment.sh\"\n\"$FLUTTER_ROOT\"/packages/flutter_tools/bin/xcode_backend.sh build";
 		};
 		618B166C7F506D999B0BDCFF /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -399,6 +421,22 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		72C36ED34430D92A68EB5959 /* [CP-User] Run Flutter Build flutter_example Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/../flutter_example/.metadata",
+				"${SRCROOT}/../flutter_example/.ios/Flutter/App.framework/App",
+				"${SRCROOT}/../flutter_example/.ios/Flutter/engine/Flutter.framework/Flutter",
+				"${SRCROOT}/../flutter_example/.ios/Flutter/flutter_export_environment.sh",
+			);
+			name = "[CP-User] Run Flutter Build flutter_example Script";
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\nset -u\nsource \"${SRCROOT}/../flutter_example/.ios/Flutter/flutter_export_environment.sh\"\n\"$FLUTTER_ROOT\"/packages/flutter_tools/bin/xcode_backend.sh build";
 		};
 		7542FE8C7FE66325BCD47A6A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -456,16 +494,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Add Flutter to Existing App Example/Pods-Add Flutter to Existing App Example-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		84FE4A5D2EB52B7897B39B81 /* [CP-User] Run Flutter Build flutter_module Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			name = "[CP-User] Run Flutter Build flutter_module Script";
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "set -e\nset -u\nsource \"${SRCROOT}/../flutter_module/.ios/Flutter/flutter_export_environment.sh\"\nexport VERBOSE_SCRIPT_LOGGING=1 && \"$FLUTTER_ROOT\"/packages/flutter_tools/bin/xcode_backend.sh build";
-		};
 		8DC48D31D5450A040E1AA8F4 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -482,16 +510,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Add Flutter to Existing App ExampleTests/Pods-Add Flutter to Existing App ExampleTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		A2A03526C86AE8B215F77457 /* [CP-User] Run Flutter Build flutter_module Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			name = "[CP-User] Run Flutter Build flutter_module Script";
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "set -e\nset -u\nsource \"${SRCROOT}/../flutter_module/.ios/Flutter/flutter_export_environment.sh\"\nexport VERBOSE_SCRIPT_LOGGING=1 && \"$FLUTTER_ROOT\"/packages/flutter_tools/bin/xcode_backend.sh build";
 		};
 		DBA1F4DF87E785C346A9FC6F /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -645,7 +663,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LIBRARY_SEARCH_PATHS = "";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -704,7 +722,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LIBRARY_SEARCH_PATHS = "";
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -726,7 +744,7 @@
 				DEVELOPMENT_TEAM = 6E2YDNU9BM;
 				EXCLUDED_ARCHS = "";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)/**";
-				HEADER_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Add Flutter to Existing App Example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -751,7 +769,7 @@
 				DEVELOPMENT_TEAM = 6E2YDNU9BM;
 				EXCLUDED_ARCHS = "";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)/**";
-				HEADER_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Add Flutter to Existing App Example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

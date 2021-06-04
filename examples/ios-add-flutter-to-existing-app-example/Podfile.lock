@@ -1,6 +1,6 @@
 PODS:
   - Flutter (1.0.0)
-  - flutter_module (0.0.1):
+  - flutter_example (0.0.1):
     - Flutter
   - FlutterPluginRegistrant (0.0.1):
     - Flutter
@@ -13,10 +13,10 @@ PODS:
   - Thunderhead/Core (6.3.7)
 
 DEPENDENCIES:
-  - Flutter (from `../flutter_module/.ios/Flutter/engine`)
-  - flutter_module (from `../flutter_module/.ios/Flutter`)
-  - FlutterPluginRegistrant (from `../flutter_module/.ios/Flutter/FlutterPluginRegistrant`)
-  - one_sdk_flutter (from `../flutter_module/.ios/.symlinks/plugins/one_sdk_flutter/ios`)
+  - Flutter (from `../flutter_example/.ios/Flutter/engine`)
+  - flutter_example (from `../flutter_example/.ios/Flutter`)
+  - FlutterPluginRegistrant (from `../flutter_example/.ios/Flutter/FlutterPluginRegistrant`)
+  - one_sdk_flutter (from `../flutter_example/.ios/Flutter/.symlinks/one_sdk_flutter/ios`)
 
 SPEC REPOS:
   trunk:
@@ -24,21 +24,21 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   Flutter:
-    :path: "../flutter_module/.ios/Flutter/engine"
-  flutter_module:
-    :path: "../flutter_module/.ios/Flutter"
+    :path: "../flutter_example/.ios/Flutter/engine"
+  flutter_example:
+    :path: "../flutter_example/.ios/Flutter"
   FlutterPluginRegistrant:
-    :path: "../flutter_module/.ios/Flutter/FlutterPluginRegistrant"
+    :path: "../flutter_example/.ios/Flutter/FlutterPluginRegistrant"
   one_sdk_flutter:
-    :path: "../flutter_module/.ios/.symlinks/plugins/one_sdk_flutter/ios"
+    :path: "../flutter_example/.ios/Flutter/.symlinks/one_sdk_flutter/ios"
 
 SPEC CHECKSUMS:
-  Flutter: ac41d61a47ae5bf8195a5598d2d63754888ec0d5
-  flutter_module: d1e1ff44505640bd9aa37f23f63380c646272be4
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  flutter_example: eef1c51f3b1d18e86246ba14e2241848086034e1
   FlutterPluginRegistrant: 88c671f368bc2deb1f24bdd9126fde8cb4b37bdb
   one_sdk_flutter: 091c0511d65e52ed17e7aa00b782d0b4257090a0
   Thunderhead: 8f0ef065e784242a685518a932a5ae72a1fc5c03
 
-PODFILE CHECKSUM: 464ca93848c06c689f6006bde73b5e44ed0e2936
+PODFILE CHECKSUM: 828f927e97b01e4a99ac50df93f3e7c19e5b668a
 
 COCOAPODS: 1.10.1

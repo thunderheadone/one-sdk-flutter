@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/navigation_flutter_view"
-        android:name="com.thunderhead.addfluttertoexistingappexample.ui.flutter.FlutterFrag"
+        android:name="com.thunderhead.addfluttertoexistingappexample.ui.flutter.THFlutterFragment"
         android:label="@string/title_flutter_view"
         tools:layout="@layout/fragment_dashboard" />
 

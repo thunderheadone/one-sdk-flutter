@@ -4,7 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import io.flutter.embedding.android.FlutterFragment
 
-class FlutterFrag : FlutterFragment() {
+class THFlutterFragment : FlutterFragment() {
 
     // Fixes crash on FlutterFragment related to Navigation component.
     // https://github.com/flutter/flutter/issues/45793

@@ -60,7 +60,7 @@
 **/ios/Flutter/app.zip
 **/ios/Flutter/flutter_assets/
 **/ios/ServiceDefinitions.json
-**/ios/Runner/GeneratedPluginRegistrant.*
+**/ios/Runner/GeneratedPluginRegistrant.* 
 
 # Exceptions to above rules.
 !**/ios/**/default.mode1v3

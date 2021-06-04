@@ -3,12 +3,12 @@
 
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/android_icon"
         android:title="@string/title_native_view" />
 
     <item
         android:id="@+id/navigation_flutter_view"
-        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:icon="@drawable/flutter_icon"
         android:title="@string/title_flutter_view" />
 
 </menu>

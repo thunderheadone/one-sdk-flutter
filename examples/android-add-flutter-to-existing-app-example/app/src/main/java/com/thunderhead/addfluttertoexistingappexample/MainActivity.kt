@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         navView.setupWithNavController(navController)
 
+        // Pre-warm the FlutterEngine
         val flutterEngine = FlutterEngine(this)
 
         // Start executing Dart code in the FlutterEngine.
@@ -32,7 +33,7 @@ class MainActivity : AppCompatActivity() {
             DartExecutor.DartEntrypoint.createDefault()
         )
 
-        // Cache the pre-warmed FlutterEngine to be used later by FlutterFragment.
+        // Cache the pre-warmed FlutterEngine to be used later by THFlutterFragment.
         FlutterEngineCache
             .getInstance()
             .put("my_engine_id", flutterEngine)

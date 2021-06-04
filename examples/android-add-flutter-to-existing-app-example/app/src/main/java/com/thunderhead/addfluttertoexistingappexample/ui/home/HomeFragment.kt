@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.thunderhead.addfluttertoexistingappexample.R
 import com.thunderhead.addfluttertoexistingappexample.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {

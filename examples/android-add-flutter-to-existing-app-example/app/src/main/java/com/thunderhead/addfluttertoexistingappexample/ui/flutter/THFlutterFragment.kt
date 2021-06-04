@@ -6,7 +6,7 @@ import io.flutter.embedding.android.FlutterFragment
 
 class THFlutterFragment : FlutterFragment() {
 
-    // Fixes crash on FlutterFragment related to Navigation component.
+    // Fixes a crash related to FlutterFragment embedded in a Navigation component.
     // https://github.com/flutter/flutter/issues/45793
     override fun onAttach(context: Context) {
         arguments = Bundle().apply {
@@ -14,6 +14,7 @@ class THFlutterFragment : FlutterFragment() {
         }
         super.onAttach(context)
     }
+
     override fun getCachedEngineId(): String? {
         return "my_engine_id"
     }

@@ -21,6 +21,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Used to connect plugins (only if you have plugins with iOS platform code).
         GeneratedPluginRegistrant.register(with: self.flutterEngine);
         
+        // The Flutter module is integrated with the ONE Flutter Plugin for Flutter configuration.
+        // Optionally, we can also configure the ONE SDK for native configuration.
+        One.startSessionWithSK(
+            "ONE-XXXXXXXXXX-1022",
+            uri:"myAppsNameURI",
+            apiKey:"f713d44a-8af0-4e79-ba7e-xxxxxxxxxxxxxxxx",
+            sharedSecret:"bb8bacb2-ffc2-4c52-aaf4-xxxxxxxxxxxxxxxx",
+            userId:"api@yourCompanyName",
+            adminMode:false,
+            hostName:"eu2.thunderhead.com"
+        )
+
+        // For Interaction Studio, uncomment below
+        // One.setTheme(.InteractionStudio)
+                
+        // To see an output of the requests/responses made by the SDK, uncomment below
+        // One.setLogLevel(.All)
+        
         return true
     }
 
@@ -37,7 +55,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
-
-
+    
 }
 

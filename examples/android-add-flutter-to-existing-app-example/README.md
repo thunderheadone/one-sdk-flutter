@@ -1,5 +1,5 @@
 ## Android Add Flutter to App Example 
-An example app that adds the [flutter_example](https://github.com/thunderheadone/one-sdk-flutter/blob/master/examples/flutter_example) Flutter project to demonstrate how to add a Flutter module to an existing Android app with the Thunderhead ONE Flutter Plugin.
+An example app that adds the [flutter_module_example](https://github.com/thunderheadone/one-sdk-flutter/blob/master/examples/flutter_module_example) Flutter project to demonstrate how to add a Flutter module to an existing Android app with the Thunderhead ONE Flutter Plugin.
 
 ## Getting Started
 For help getting started with Flutter, view the Flutter online [documentation](https://flutter.dev/).
@@ -14,7 +14,7 @@ In order to get started and run this example app, you'll need [Flutter](https://
 Now, with the ability to integrate Flutter piecewise within a native app, you can now configure the SDK in two places. 
 
 ### Configure SDK in Flutter Module
-Open [main.dart](https://github.com/thunderheadone/one-sdk-flutter/blob/master/examples/flutter_example/lib/main.dart#L48)
+Open the module's [main.dart](https://github.com/thunderheadone/one-sdk-flutter/blob/master/examples/flutter_example/lib/main.dart#L48)
 to initialize the SDK using the integration parameters specific to your ONE environment.
 
 ```java

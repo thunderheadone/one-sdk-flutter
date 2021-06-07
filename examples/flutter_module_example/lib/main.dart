@@ -45,12 +45,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final String SITE_KEY = "ONE-XABKKQ5X5E-1000";
-  final String TOUCHPOINT = "android://flutter-example";
-  final String API_KEY = "eff883bb-d4e5-4d0e-bba0-7c7094c3c112";
-  final String SHARED_SECRET = "f22413d6-1667-46e5-bfcb-e0f9c61cb445";
-  final String USER_ID = "apop@onedemo-presales";
-  final String HOST = "https://onedemo.thunderhead.com";
+  final String SITE_KEY = "ONE-XXXXXXXXXX-1022";
+  final String TOUCHPOINT = "myAppsNameURI";
+  final String API_KEY = "f713d44a-8af0-4e79-ba7e-xxxxxxxxx";
+  final String SHARED_SECRET = "bb8bacb2-ffc2-4c52-aaf4-xxx";
+  final String USER_ID = "yourUsername@yourCompanyName";
+  final String HOST = "https://xx.thunderhead.com";
 
   @override
   void initState() {

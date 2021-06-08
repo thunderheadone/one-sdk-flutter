@@ -21,8 +21,9 @@ dependencies:
     sdk: flutter
 
   one_sdk_flutter:
-    git:
-      url: https://github.com/thunderheadone/one-sdk-flutter.git
+    path: ../../
+    # git:
+    #   url: https://github.com/thunderheadone/one-sdk-flutter.git
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -82,7 +83,3 @@ flutter:
   # maintain consistency when adding or modifying assets and plugins.
   # They also do not have any bearing on your native host application's
   # identifiers, which may be completely independent or the same as these.
-  module:
-    androidX: true
-    androidPackage: com.thunderhead.flutter_module_example
-    iosBundleIdentifier: com.thunderhead.flutter_module_example

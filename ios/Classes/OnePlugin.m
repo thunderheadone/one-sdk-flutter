@@ -42,8 +42,6 @@
                      userId:userId
                   adminMode:adminMode.boolValue
                    hostName:hostName];
-
-    [One disableAutomaticInteractionDetection:YES];
     
     result(nil);
 }

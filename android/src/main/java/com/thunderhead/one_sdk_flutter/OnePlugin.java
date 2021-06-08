@@ -1,34 +1,38 @@
 package com.thunderhead.one_sdk_flutter;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.thunderhead.One;
-import com.thunderhead.OneLogLevel;
 import com.thunderhead.OneModes;
 import com.thunderhead.android.api.configuration.OneConfiguration;
 import com.thunderhead.android.api.interactions.OneCall;
 import com.thunderhead.android.api.interactions.OneCallback;
 import com.thunderhead.android.api.interactions.OneInteractionPath;
 import com.thunderhead.android.api.interactions.OneRequest;
+import com.thunderhead.android.api.logging.Component;
+import com.thunderhead.android.api.logging.LogLevel;
+import com.thunderhead.android.api.logging.OneLoggingConfiguration;
 import com.thunderhead.android.api.responsetypes.OneAPIError;
 import com.thunderhead.android.api.responsetypes.OneResponse;
 import com.thunderhead.android.api.responsetypes.OneSDKError;
-import com.thunderhead.utils.ThunderheadLogger;
 
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.flutter.embedding.engine.plugins.FlutterPlugin;
+import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
-import io.flutter.plugin.common.FlutterPlugin;
 
 /** OnePlugin */
 public class OnePlugin implements MethodCallHandler, FlutterPlugin {
   protected static final String LOG_TAG = "OnePlugin";
+  private MethodChannel methodChannel;
 
   /** Plugin registration. */
   /** We are keeping the registerWith() method to remain compatible with apps that don’t use the v2 Android embedding */
@@ -44,14 +48,12 @@ public class OnePlugin implements MethodCallHandler, FlutterPlugin {
   }
 
   private void onAttachedToEngine(Context applicationContext, BinaryMessenger messenger) {
-    this.applicationContext = applicationContext;
     methodChannel = new MethodChannel(messenger, "one_sdk_flutter");
     methodChannel.setMethodCallHandler(this);
   }
 
   @Override
   public void onDetachedFromEngine(FlutterPluginBinding binding) {
-    applicationContext = null;
     methodChannel.setMethodCallHandler(null);
     methodChannel = null;
   }
@@ -60,7 +62,6 @@ public class OnePlugin implements MethodCallHandler, FlutterPlugin {
   public void onMethodCall(MethodCall call, Result result) {
     if (call.method.equals("getPlatformVersion")) {
       result.success("Android " + android.os.Build.VERSION.RELEASE);
-
     } else if (call.method.equals("sendInteraction")) {
       final Map<String, Object> arguments = call.arguments();
       String interactionPath = (String) arguments.get("interactionPath");
@@ -70,14 +71,12 @@ public class OnePlugin implements MethodCallHandler, FlutterPlugin {
       } catch (Exception e) {
         result.error("Failed to send interaction", e.getLocalizedMessage(), e);
       }
-
     } else if (call.method.equals("setLogLevel")) {
       setLogLevel(call, result);
     } else if (call.method.equals("initializeOne")) {
       initializeOne(call, result);
     } else {
       result.notImplemented();
-
     }
   }
 
@@ -105,13 +104,30 @@ public class OnePlugin implements MethodCallHandler, FlutterPlugin {
   }
 
   private void setLogLevel(MethodCall call, final Result result) {
+    OneLoggingConfiguration oneLoggingConfiguration;
     final Map<String, Boolean> arguments = call.arguments();
-    Boolean allOrNone = arguments.get("logLevel");
-    if (allOrNone == null) {
-      allOrNone = true;
+    Boolean enabled = arguments.get("logLevel");
+
+    if (enabled == null) {
+      enabled = true;
     }
-    One.setLogLevel(allOrNone ? OneLogLevel.ALL : OneLogLevel.NONE);
-    result.success("Set Thunderhead LogLevel: " + (allOrNone ? "Enabled" : "Disabled"));
+
+    if (enabled) {
+      oneLoggingConfiguration = OneLoggingConfiguration.builder()
+              .log(LogLevel.VERBOSE)
+              .log(LogLevel.DEBUG)
+              .log(Component.ANY)
+              .build();
+    } else {
+      oneLoggingConfiguration = OneLoggingConfiguration.builder()
+              .log(LogLevel.WARN)
+              .log(LogLevel.ERROR)
+              .log(Component.ANY)
+              .build();
+    }
+
+    One.setLoggingConfiguration(oneLoggingConfiguration);
+    result.success("Set Thunderhead LogLevel: " + (enabled ? "Enabled" : "Disabled"));
   }
 
   private void sendInteraction(String interactionPath, HashMap properties, final Result result) {

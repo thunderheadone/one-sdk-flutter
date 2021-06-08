@@ -374,15 +374,15 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/../flutter_example/.metadata",
-				"${SRCROOT}/../flutter_example/.ios/Flutter/App.framework/App",
-				"${SRCROOT}/../flutter_example/.ios/Flutter/engine/Flutter.framework/Flutter",
-				"${SRCROOT}/../flutter_example/.ios/Flutter/flutter_export_environment.sh",
+				"${SRCROOT}/../flutter_module_example/.metadata",
+				"${SRCROOT}/../flutter_module_example/.ios/Flutter/App.framework/App",
+				"${SRCROOT}/../flutter_module_example/.ios/Flutter/engine/Flutter.framework/Flutter",
+				"${SRCROOT}/../flutter_module_example/.ios/Flutter/flutter_export_environment.sh",
 			);
 			name = "[CP-User] Run Flutter Build flutter_example Script";
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -e\nset -u\nsource \"${SRCROOT}/../flutter_example/.ios/Flutter/flutter_export_environment.sh\"\n\"$FLUTTER_ROOT\"/packages/flutter_tools/bin/xcode_backend.sh build";
+			shellScript = "set -e\nset -u\nsource \"${SRCROOT}/../flutter_module_example/.ios/Flutter/flutter_export_environment.sh\"\n\"$FLUTTER_ROOT\"/packages/flutter_tools/bin/xcode_backend.sh build";
 		};
 		57F423BF048F86FC841AE3AB /* [CP-User] Run Flutter Build flutter_example Script */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -390,15 +390,15 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/../flutter_example/.metadata",
-				"${SRCROOT}/../flutter_example/.ios/Flutter/App.framework/App",
-				"${SRCROOT}/../flutter_example/.ios/Flutter/engine/Flutter.framework/Flutter",
-				"${SRCROOT}/../flutter_example/.ios/Flutter/flutter_export_environment.sh",
+				"${SRCROOT}/../flutter_module_example/.metadata",
+				"${SRCROOT}/../flutter_module_example/.ios/Flutter/App.framework/App",
+				"${SRCROOT}/../flutter_module_example/.ios/Flutter/engine/Flutter.framework/Flutter",
+				"${SRCROOT}/../flutter_module_example/.ios/Flutter/flutter_export_environment.sh",
 			);
 			name = "[CP-User] Run Flutter Build flutter_example Script";
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -e\nset -u\nsource \"${SRCROOT}/../flutter_example/.ios/Flutter/flutter_export_environment.sh\"\n\"$FLUTTER_ROOT\"/packages/flutter_tools/bin/xcode_backend.sh build";
+			shellScript = "set -e\nset -u\nsource \"${SRCROOT}/../flutter_module_example/.ios/Flutter/flutter_export_environment.sh\"\n\"$FLUTTER_ROOT\"/packages/flutter_tools/bin/xcode_backend.sh build";
 		};
 		618B166C7F506D999B0BDCFF /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -428,15 +428,15 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/../flutter_example/.metadata",
-				"${SRCROOT}/../flutter_example/.ios/Flutter/App.framework/App",
-				"${SRCROOT}/../flutter_example/.ios/Flutter/engine/Flutter.framework/Flutter",
-				"${SRCROOT}/../flutter_example/.ios/Flutter/flutter_export_environment.sh",
+				"${SRCROOT}/../flutter_module_example/.metadata",
+				"${SRCROOT}/../flutter_module_example/.ios/Flutter/App.framework/App",
+				"${SRCROOT}/../flutter_module_example/.ios/Flutter/engine/Flutter.framework/Flutter",
+				"${SRCROOT}/../flutter_module_example/.ios/Flutter/flutter_export_environment.sh",
 			);
 			name = "[CP-User] Run Flutter Build flutter_example Script";
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -e\nset -u\nsource \"${SRCROOT}/../flutter_example/.ios/Flutter/flutter_export_environment.sh\"\n\"$FLUTTER_ROOT\"/packages/flutter_tools/bin/xcode_backend.sh build";
+			shellScript = "set -e\nset -u\nsource \"${SRCROOT}/../flutter_module_example/.ios/Flutter/flutter_export_environment.sh\"\n\"$FLUTTER_ROOT\"/packages/flutter_tools/bin/xcode_backend.sh build";
 		};
 		7542FE8C7FE66325BCD47A6A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

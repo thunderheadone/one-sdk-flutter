@@ -7,12 +7,15 @@
 
 import UIKit
 import Flutter
-
+import FlutterPluginRegistrant
 class FlutterVC: FlutterViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        // !!! MUST call this method if subclassing `FlutterViewController` in order for the one_sdk_flutter plugin to work. !!!
+        // Used to connect plugins (only if you have plugins with iOS platform code).
+        GeneratedPluginRegistrant.register(with: self);
     }
     
     override var engine: FlutterEngine? {

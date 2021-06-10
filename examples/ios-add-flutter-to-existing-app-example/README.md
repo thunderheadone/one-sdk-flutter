@@ -1,19 +1,45 @@
 ## iOS Add Flutter to App Example 
-An example app that adds the [flutter_module_example](https://github.com/thunderheadone/one-sdk-flutter/blob/master/examples/flutter_module_example) Flutter project to demonstrate how to add a Flutter module to an existing iOS app with the Thunderhead ONE Flutter Plugin.
+An example app that adds the [flutter_module_example](https://github.com/thunderheadone/one-sdk-flutter/blob/master/examples/flutter_module_example) Flutter project to demonstrate how to add a Flutter module to an existing Android app with the Thunderhead ONE Flutter Plugin.
 
-## Getting Started
-For help getting started with Flutter, view the Flutter online [documentation](https://flutter.dev/).
+To get started and run this example app, [Flutter](https://flutter.dev/docs/get-started/install) installation is required.
 
 For instructions integrating Flutter modules to your existing applications,
 see the [add-to-app documentation](https://flutter.dev/docs/development/add-to-app).
 
-### Flutter installation
-In order to get started and run this example app, you'll need [Flutter](https://flutter.dev/docs/get-started/install) installed.
+## Requirements
+* Flutter Version: v1.22.0+ (stable). 
+    * Note: Flutter v2.0.0+ has not yet been tested and may encounter build issues.
 
-## Configure the ONE SDK 
+## Table of Contents 
+* [Getting Started](#getting-started)
+    * [Install Flutter Packages](#install-flutter-packages)
+    * [Install Pods](#install-pods)
+    * [Configure the ONE SDK](#configure-the-one-sdk)
+      * [#1: Configure SDK in Flutter Module](#1-configure-sdk-in-flutter-module)
+      * [#2: Configure SDK in iOS](#2-configure-sdk-in-ios)
+    * [Run the iOS app](#run-the-ios-app)
+* [Questions or need help](#questions-or-need-help)
+    * [Thunderhead ONE Support](#thunderhead-one-support)
+    * [Salesforce Interaction Studio Support](#salesforce-interaction-studio-support)
+
+## Getting Started
+
+### Install Flutter Packages
+In Terminal, navigate to [`flutter_module_example`](https://github.com/thunderheadone/one-sdk-flutter/blob/master/examples/flutter_module_example/) folder and run the following command:
+```
+$ flutter pub get
+```
+
+### Install Pods
+In Terminal, navigate to [`ios-add-flutter-to-existing-app-example`](https://github.com/thunderheadone/one-sdk-flutter/blob/master/examples/ios-add-flutter-to-existing-app-example) folder and run the following command:
+```
+$ pod install
+```
+
+### Configure the ONE SDK 
 Now, with the ability to integrate Flutter piecewise within a native app, you can now configure the SDK in two places. 
 
-### Configure SDK in Flutter Module
+#### #1: Configure SDK in Flutter Module
 Open the module's [main.dart](https://github.com/thunderheadone/one-sdk-flutter/blob/master/examples/flutter_module_example/lib/main.dart#L48)
 to initialize the SDK using the integration parameters specific to your ONE environment.
 
@@ -26,8 +52,8 @@ to initialize the SDK using the integration parameters specific to your ONE envi
   final String HOST = "https://xx.thunderhead.com";
 ```
 
-### Configure SDK in iOS
-Open [AppDelegate.swift](https://github.com/thunderheadone/one-sdk-flutter/blob/master/examples/ios-add-flutter-to-existing-app-example/os-add-flutter-to-existing-app-example/Add%20Flutter%20to%20Existing%20App%20Example/AppDelegate.swift#L26)
+#### #2: Configure SDK in iOS
+Open [AppDelegate.swift](https://github.com/thunderheadone/one-sdk-flutter/blob/master/examples/ios-add-flutter-to-existing-app-example/ios-add-flutter-to-existing-app-example/Add%20Flutter%20to%20Existing%20App%20Example/AppDelegate.swift#L26)
 to initialize the SDK using the integration parameters specific to your ONE environment.
 
 ```swift
@@ -43,20 +69,14 @@ One.startSessionWithSK(
 ```
 * For more information on finding these parameters, see [Find the Information required when Integrating ONE with your Mobile Solutions](https://na5.thunderhead.com/one/help/conversations/how-do-i/mobile/one_integrate_mobile_find_integration_info/)
 
-## Install Pod Dependencies
-From terminal, in the example app folder, run the following command:
-```
-$ pod install
-```
 
-## Run the iOS app
-Navigate to the example app folder and open `Add Flutter to Existing App Example.xcworkspace` in Xcode, then build and run the app.
+### Run the iOS app
+Navigate to to [`ios-add-flutter-to-existing-app-example`](https://github.com/thunderheadone/one-sdk-flutter/blob/master/examples/ios-add-flutter-to-existing-app-example)  folder and open `Add Flutter to Existing App Example.xcworkspace` in Xcode, then build and run the app.
 
 ## Questions or need help
 
 ### Thunderhead ONE Support
 _The Thunderhead team is available 24/7 to answer any questions you have. Just email onesupport@thunderhead.com or visit our docs page for more detailed installation and usage information._
-
 
 ### Salesforce Interaction Studio Support
 _For Salesforce Marketing Cloud Interaction Studio questions, please submit a support ticket via https://help.salesforce.com/home_

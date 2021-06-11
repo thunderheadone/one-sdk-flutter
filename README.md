@@ -19,18 +19,23 @@ By disabling automatic Interaction detection, the SDK will no longer automatical
 
 It is recommended to disable automatic Interaction detection in Flutter applications as the SDK does not recognize Flutter or web view elements, so it becomes your responsibility to send them when needed by using the [send Interaction](#send-an-interaction) methods outlined below.  
 
-For native applications with [Flutter added](https://flutter.dev/docs/development/add-to-app), you may want to ignore disabling automatic Interaction detection to automatically detect native Interactions.
+For native applications where only a part of the app uses [Flutter](https://flutter.dev/docs/development/add-to-app), you may want to ignore disabling automatic Interaction detection to automatically detect native Interactions.
 
 You can disable automatic Interaction detection by calling the method `disableAutomaticInteractionDetection:` and passing `true` as a parameter, as shown below:
 
 ```swift
 // Swift
 One.disableAutomaticInteractionDetection(true)
+// https://github.com/thunderheadone/one-sdk-ios#disable-automatic-interaction-detection
 ```
 
-```objective-c
-// Objective-C
-[One disableAutomaticInteractionDetection:YES];
+```kotlin
+// Kotlin
+oneConfigureCodelessInteractionTracking {
+    // disables Fragment/Activity Interaction Tracking
+    disableCodelessInteractionTracking = true 
+}
+// https://github.com/thunderheadone/one-sdk-android#disable-automatic-interaction-detection
 ```
 
 An appropriate place to call the method might be under `didFinishLaunchingWithOptions` in your `AppDelegate` for iOS or under `onCreate` in your `Application` class for Android.

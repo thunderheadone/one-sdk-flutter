@@ -57,8 +57,7 @@ Open [AppDelegate.swift](https://github.com/thunderheadone/one-sdk-flutter/blob/
 to initialize the SDK using the integration parameters specific to your ONE environment.
 
 ```swift
-One.startSessionWithSK(
-    "ONE-XXXXXXXXXX-1022",
+One.startSessionWithSK("ONE-XXXXXXXXXX-1022",
     uri:"myAppsNameURI",
     apiKey:"f713d44a-8af0-4e79-ba7e-xxxxxxxxxxxxxxxx",
     sharedSecret:"bb8bacb2-ffc2-4c52-aaf4-xxxxxxxxxxxxxxxx",

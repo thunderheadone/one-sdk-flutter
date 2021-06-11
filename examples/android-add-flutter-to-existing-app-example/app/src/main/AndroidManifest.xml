@@ -12,7 +12,8 @@
         android:theme="@style/Theme.AddFlutterToExistingAppExample"
         tools:replace="android:appComponentFactory"
         android:appComponentFactory="android.support.v4.app.CoreComponentFactory"
-        android:name=".ThunderheadApplication">
+        android:name=".ThunderheadApplication"
+        android:networkSecurityConfig="@xml/network_security_config">
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">

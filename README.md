@@ -2,8 +2,8 @@
 
 The Thunderhead ONE SDK Flutter Plugin for iOS and Android.
 
-## Example app
-Check out the [flutter-example](https://github.com/thunderheadone/one-sdk-flutter/tree/master/examples/flutter_example) app to see integration examples.
+## Examples
+Check out the [examples](https://github.com/thunderheadone/one-sdk-flutter/tree/master/examples/) folder to see integration examples.
 
 ## Installation
 To install the Thunderhead ONE Flutter Plugin, go to your `pubspec.yaml` and add the dependency:
@@ -15,7 +15,7 @@ one_sdk_flutter:
 * See example [here](https://github.com/thunderheadone/one-sdk-flutter/tree/master/examples/flutter_example/pubspec.yaml#L23)
 
 ### Disable automatic Interaction detection
-By disabling automatic Interaction detection, the SDK will no longer automatically send Interaction requests as native iOS `View Controllers` or Android `Activities` are presented on screen. 
+By disabling automatic Interaction detection, the SDK will no longer automatically send Interaction requests as native iOS `View Controllers` or Android `Activities` or `Fragments` are presented on screen. 
 
 It is recommended to disable automatic Interaction detection in Flutter applications as the SDK does not recognize Flutter or web view elements, so it becomes your responsibility to send them when needed by using the [send Interaction](#send-an-interaction) methods outlined below.  
 

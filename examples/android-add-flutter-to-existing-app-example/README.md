@@ -8,7 +8,7 @@ see the [add-to-app documentation](https://flutter.dev/docs/development/add-to-a
 
 ## Requirements
 * Flutter Version: v1.22.0+ (stable). 
-    * Note: Flutter v2.0.0+ has not yet been tested and may encounter build issues.
+* *Note:* We are in the process of adding Flutter v2.0.0+. If you have already updated to Flutter v2.0.0 and require immediate support please reach out to us via our support portal.
 
 ## Table of Contents 
 * [Getting Started](#getting-started)

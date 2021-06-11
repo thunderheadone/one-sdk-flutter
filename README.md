@@ -45,7 +45,7 @@ You can set this back to `false` at any point to restart automatic Interaction d
 ## Usage
 ### Initialization
 To initialize the ONE Flutter Plugin, call the following method:
-```javascript
+```dart
 import 'package:one_sdk_flutter/one_sdk_flutter.dart';
 
 One.initializeOne(SITE_KEY, TOUCHPOINT, API_KEY, SHARED_SECRET, USER_ID, HOST, false);
@@ -54,20 +54,20 @@ One.initializeOne(SITE_KEY, TOUCHPOINT, API_KEY, SHARED_SECRET, USER_ID, HOST, f
 
 ### Send an Interaction 
 To send an Interaction request without properties, call the following method:
-```javascript
+```dart
 One.sendInteraction("/interactionPath", null);
 ```
 * See example of usage [here](https://github.com/thunderheadone/one-sdk-flutter/tree/master/examples/flutter_example/lib/main.dart#L60)
 
 To send an Interaction request with properties, call the following method:
-```javascript
+```dart
 One.sendInteraction("/interactionPath", { 'key' : 'value' });
 ```
 * See example of usage [here](https://github.com/thunderheadone/one-sdk-flutter/tree/master/examples/flutter_example/lib/main.dart#L128)
 
 ### Access debug information
 To configure logging, call the following method:
-```javascript
+```dart
 One.setThunderheadLogLevel(true);
 ```
 * See example of usage [here](https://github.com/thunderheadone/one-sdk-flutter/tree/master/examples/flutter_example/lib/main.dart#L59)

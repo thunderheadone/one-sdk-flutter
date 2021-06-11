@@ -1,5 +1,5 @@
 ## iOS Add Flutter to App Example 
-An example app that adds the [flutter_module_example](https://github.com/thunderheadone/one-sdk-flutter/blob/master/examples/flutter_module_example) Flutter project to demonstrate how to add a Flutter module to an existing Android app with the Thunderhead ONE Flutter Plugin.
+An example app that adds the [flutter_module_example](https://github.com/thunderheadone/one-sdk-flutter/blob/master/examples/flutter_module_example) Flutter project to demonstrate how to add a Flutter module to an existing iOS app with the Thunderhead ONE Flutter Plugin.
 
 To get started and run this example app, [Flutter](https://flutter.dev/docs/get-started/install) installation is required.
 
@@ -43,7 +43,7 @@ Now, with the ability to integrate Flutter piecewise within a native app, you ca
 Open the module's [main.dart](https://github.com/thunderheadone/one-sdk-flutter/blob/master/examples/flutter_module_example/lib/main.dart#L48)
 to initialize the SDK using the integration parameters specific to your ONE environment.
 
-```java
+```dart
   final String SITE_KEY = "ONE-XXXXXXXXXX-1022";
   final String TOUCHPOINT = "myAppsNameURI";
   final String API_KEY = "f713d44a-8af0-4e79-ba7e-xxxxxxxxx";
@@ -63,7 +63,7 @@ One.startSessionWithSK("ONE-XXXXXXXXXX-1022",
     sharedSecret:"bb8bacb2-ffc2-4c52-aaf4-xxxxxxxxxxxxxxxx",
     userId:"api@yourCompanyName", // when integrating with Interaction Studio use a numeric user id - see https://eu2.thunderhead.com/one/help/interaction-studio/how-do-i/mobile/one_integrate_mobile_find_integration_info/#username-user-id
     adminMode:false,
-    hostName:"eu2.thunderhead.com"
+    hostName:"xx.thunderhead.com"
 )
 ```
 * For more information on finding these parameters, see [Find the Information required when Integrating ONE with your Mobile Solutions](https://na5.thunderhead.com/one/help/conversations/how-do-i/mobile/one_integrate_mobile_find_integration_info/)

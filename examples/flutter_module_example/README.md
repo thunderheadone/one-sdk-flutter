@@ -6,7 +6,7 @@ This example project is a duplicate of [flutter_example](https://github.com/thun
 Open the module's [main.dart](https://github.com/thunderheadone/one-sdk-flutter/blob/master/examples/flutter_module_example/lib/main.dart#L48)
 to initialize the SDK using the integration parameters specific to your ONE environment.
 
-```java
+```dart
   final String SITE_KEY = "ONE-XXXXXXXXXX-1022";
   final String TOUCHPOINT = "myAppsNameURI";
   final String API_KEY = "f713d44a-8af0-4e79-ba7e-xxxxxxxxx";

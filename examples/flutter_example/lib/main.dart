@@ -59,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
     One.setThunderheadLogLevel(true);
 
     // Calling this in `initState()` for demonstration purposes.
-    // It becomes your responsibility to send them when needed in your Flutter app lifecycle.
+    // When to send these Interaction requests should be aligned with your business use cases rather than follow exactly this code placement.
     One.sendInteraction("/home", null);
   }
 
@@ -107,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator
                     .push(context, MaterialPageRoute(builder: (context) => SecondRoute()))
                     // Send Interaction each time this view appears (when SecondRoute is popped of the view stack and returns to this view).
-                    // It becomes your responsibility to send them when needed in your Flutter app lifecycle.
+                    // When to send these Interaction requests should be aligned with your business use cases rather than follow exactly this code placement.
                     .then((value) => One.sendInteraction("/home", null));
               },
             ),
@@ -146,7 +146,7 @@ class SecondRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Calling this in `build()` for demonstration purposes.
-    // It becomes your responsibility to send them when needed in your Flutter app lifecycle.
+    // When to send these Interaction requests should be aligned with your business use cases rather than follow exactly this code placement.
     One.sendInteraction("/secondPage", null);
 
     return Scaffold(

@@ -12,7 +12,7 @@ class One {
   }
 
   static String get pluginVersion  {
-    return "Thunderhead 0.1.0";
+    return "Thunderhead 1.0.0";
   }
 
   static Future<String> sendInteraction(String interactionPath, Map properties) async  {

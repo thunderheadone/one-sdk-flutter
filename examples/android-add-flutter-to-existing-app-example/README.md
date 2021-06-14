@@ -83,15 +83,15 @@ class ThunderheadApplication : Application() {
     * `Site Key` (for your specific Space)
     * `Touchpoint URI`
         * The native Thunderhead SDK will automatically prefix the URI scheme (i.e. android:// and ios://) when it is omitted. 
-            * i.e. “optimization-example”
+            * i.e. “flutter-example”
         * If you want to configure under a single Touchpoint, you can explicitly prefix your URI scheme 
-            * i.e. “ionic://optimization-example”
+            * i.e. “ionic://flutter-example”
     * `API Key` & `Shared Secret` (required for OAuth 1.0 authentication)
     * `Username/User ID` (required for OAuth 1.0 authentication)
     * `Host name`. 
         * Typically, this is https://na5.thunderhead.com or https://eu2.thunderhead.com.
     * `Admin Mode`
-        * Admin mode (adminMode = true) provides you with an interface that lets you add Interaction Points, Activity Capture Points, and Attribute Capture Points to native UI elements within the app.  However, hybrid apps do not support this feature because hybrid solutions typically use  non-native UI elements .  Only preview mode is supported to view your unpublished (In the Works) configuration before publishing it to your live environment.
+        * Admin mode (adminMode = true) provides you with an interface that lets you add Interaction Points, Activity Capture Points, and Attribute Capture Points to native UI elements within the app. However, hybrid apps do not support this feature because hybrid solutions typically use  non-native UI elements . Only preview mode is supported to view your unpublished (In the Works) configuration before publishing it to your live environment.
             * The Admin mode build should only be distributed internally to business users involved in ONE setup. This is your internal dev build.
     * `User Mode` (adminMode = false) User mode build should be used for production builds, when you are satisfied that all insights are being tracked in Admin mode and internal QA requirements have been met.
 

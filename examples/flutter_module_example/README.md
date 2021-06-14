@@ -26,7 +26,7 @@ to initialize the SDK using the integration parameters specific to your ONE envi
     * `Host name`. 
         * Typically, this is https://na5.thunderhead.com or https://eu2.thunderhead.com.
     * `Admin Mode`
-        * Admin mode (adminMode = true) provides you with an interface that lets you add Interaction Points, Activity Capture Points, and Attribute Capture Points to native UI elements within the app. However, hybrid apps do not support this feature because hybrid solutions typically use  non-native UI elements . Only preview mode is supported to view your unpublished (In the Works) configuration before publishing it to your live environment.
+        * Admin mode (adminMode = true) provides you with an interface that lets you add Interaction Points, Activity Capture Points, and Attribute Capture Points to native UI elements within the app. However, hybrid apps do not support this feature because hybrid solutions typically use  non-native UI elements. Only preview mode is supported to view your unpublished (In the Works) configuration before publishing it to your live environment.
             * The Admin mode build should only be distributed internally to business users involved in ONE setup. This is your internal dev build.
     * `User Mode` (adminMode = false) User mode build should be used for production builds, when you are satisfied that all insights are being tracked in Admin mode and internal QA requirements have been met.
     

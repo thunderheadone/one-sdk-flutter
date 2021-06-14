@@ -24,6 +24,7 @@ dependencies:
     # installs from git
     git:
       url: https://github.com/thunderheadone/one-sdk-flutter.git
+      ref: 1.0.0
     # installs from local file reference
     # path: ../../
 

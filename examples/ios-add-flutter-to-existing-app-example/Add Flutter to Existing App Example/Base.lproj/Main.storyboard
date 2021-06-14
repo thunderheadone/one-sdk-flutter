@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="kYs-sH-fMw">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Flutter View-->
+        <scene sceneID="Y9U-4z-rcH">
+            <objects>
+                <viewController id="UDY-aX-BeH" customClass="FlutterVC" customModule="Add_Flutter_to_Existing_App_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0fA-Hn-GBn">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="kho-ys-Ty9"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Flutter View" image="flutter-icon" id="O4T-Rq-a1h"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ggc-Xo-we3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-238" y="43"/>
+        </scene>
+        <!--Native View-->
+        <scene sceneID="otu-Wd-N0Z">
+            <objects>
+                <viewController id="l1R-Rk-3Xj" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="nIm-SX-G2a">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Native View Controller" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="twv-nH-V2c">
+                                <rect key="frame" x="122.5" y="437.5" width="169" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="5yH-No-1ce"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="twv-nH-V2c" firstAttribute="centerX" secondItem="nIm-SX-G2a" secondAttribute="centerX" id="byd-QL-vf4"/>
+                            <constraint firstItem="twv-nH-V2c" firstAttribute="centerY" secondItem="nIm-SX-G2a" secondAttribute="centerY" id="uob-qL-jXM"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Native View" image="applelogo" catalog="system" id="Od0-GO-x4Z"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qRA-am-xdx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-238" y="688"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="2Yz-fC-7Pw">
+            <objects>
+                <tabBarController id="kYs-sH-fMw" customClass="TabBarController" customModule="Add_Flutter_to_Existing_App_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="JXx-El-DiQ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="l1R-Rk-3Xj" kind="relationship" relationship="viewControllers" id="vcL-uE-WeB"/>
+                        <segue destination="UDY-aX-BeH" kind="relationship" relationship="viewControllers" id="RUd-ba-U7S"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hB1-No-SM7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1457" y="58"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="applelogo" catalog="system" width="103" height="128"/>
+        <image name="flutter-icon" width="25" height="25"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

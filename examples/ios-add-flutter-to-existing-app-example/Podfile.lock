@@ -1,0 +1,44 @@
+PODS:
+  - Flutter (1.0.0)
+  - flutter_example (0.0.1):
+    - Flutter
+  - FlutterPluginRegistrant (0.0.1):
+    - Flutter
+    - one_sdk_flutter
+  - one_sdk_flutter (0.1.0):
+    - Flutter
+    - Thunderhead
+  - Thunderhead (6.3.7):
+    - Thunderhead/Core (= 6.3.7)
+  - Thunderhead/Core (6.3.7)
+
+DEPENDENCIES:
+  - Flutter (from `../flutter_module_example/.ios/Flutter/engine`)
+  - flutter_example (from `../flutter_module_example/.ios/Flutter`)
+  - FlutterPluginRegistrant (from `../flutter_module_example/.ios/Flutter/FlutterPluginRegistrant`)
+  - one_sdk_flutter (from `../flutter_module_example/.ios/Flutter/.symlinks/one_sdk_flutter/ios`)
+
+SPEC REPOS:
+  trunk:
+    - Thunderhead
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: "../flutter_module_example/.ios/Flutter/engine"
+  flutter_example:
+    :path: "../flutter_module_example/.ios/Flutter"
+  FlutterPluginRegistrant:
+    :path: "../flutter_module_example/.ios/Flutter/FlutterPluginRegistrant"
+  one_sdk_flutter:
+    :path: "../flutter_module_example/.ios/Flutter/.symlinks/one_sdk_flutter/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  flutter_example: eef1c51f3b1d18e86246ba14e2241848086034e1
+  FlutterPluginRegistrant: 88c671f368bc2deb1f24bdd9126fde8cb4b37bdb
+  one_sdk_flutter: 091c0511d65e52ed17e7aa00b782d0b4257090a0
+  Thunderhead: 8f0ef065e784242a685518a932a5ae72a1fc5c03
+
+PODFILE CHECKSUM: 8de4cd5bf4276453e5442163618e5193cfc0aaca
+
+COCOAPODS: 1.10.1

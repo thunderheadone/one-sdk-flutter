@@ -22,10 +22,17 @@ class One {
     return _channel.invokeMethod('sendInteraction', interactionPropertiesMap);
   }
 
-  static Future<void> setThunderheadLogLevel(bool allOrNone) async {
-    var logMap = <String, bool> {
-      'logLevel' : allOrNone
+  static Future<String> sendResponseCode(String responseCode, String interactionPath) async {
+    var responseCodeMap = <String, String>{
+      'responseCode': responseCode,
+      'interactionPath': interactionPath
     };
+    return _channel.invokeMethod('sendResponseCode', responseCodeMap);
+  }
+
+  /// Configure Thunderhead logging
+  static Future<void> setThunderheadLogLevel(bool allOrNone) async {
+    var logMap = <String, bool>{'logLevel': allOrNone};
     var result = await _channel.invokeMethod('setLogLevel', logMap);
     print(result);
   }
@@ -41,18 +48,66 @@ class One {
       String userID,
       String host,
       bool adminMode) async {
-
-    var initParameters  = <String, Object> {
-      'siteKey' : siteKey,
-      'touchpoint' : touchpoint,
-      'apiKey' : apiKey,
-      'sharedSecret' : sharedSecret,
-      'userID' : userID,
-      'host' : host,
-      'adminMode' : adminMode
+    var initParameters = <String, Object>{
+      'siteKey': siteKey,
+      'touchpoint': touchpoint,
+      'apiKey': apiKey,
+      'sharedSecret': sharedSecret,
+      'userID': userID,
+      'host': host,
+      'adminMode': adminMode
     };
     var result = await _channel.invokeMethod('initializeOne', initParameters);
     print(result);
   }
 
+  /// Configure optOut settings.
+  ///
+  /// Privacy compliance method to completely stop tracking a customer's actions.
+  /// By default, the Thunderhead SDK is opted in for all settings.
+  static Future<void> optOut(bool optOut, [List<OneOptOptions> options]) async {
+    List<String> optOutList = [];
+    if (options != null) {
+      for (var optOutOption in options) {
+        optOutList.add(optOutOption.value);
+      }
+    }
+
+    var optOutMap = <String, Object>{'optOut': optOut, 'options': optOutList};
+    var result = await _channel.invokeMethod('optOut', optOutMap);
+    print(result);
+  }
+}
+
+/// OptOut configuration options.
+///
+/// [OneOptOptions.allTracking] : Opts out of all tracking.
+///
+/// [OneOptOptions.cityCountryDetection] : Use this option to opt an end-user out or in of all city/country level tracking.
+///
+/// [OneOptOptions.iOS_keychainTidStorage] : iOS specific option to opt out of keychain storage.
+///
+/// [OneOptOptions.iOS_pasteboardTidStorage] : iOS specific option to opt out of pasteboard tid storage.
+enum OneOptOptions {
+  allTracking,
+  cityCountryDetection,
+  iOS_keychainTidStorage,
+  iOS_pasteboardTidStorage
+}
+
+extension StringValue on OneOptOptions {
+  String get value {
+    switch (this) {
+      case OneOptOptions.allTracking:
+        return "allTracking";
+      case OneOptOptions.cityCountryDetection:
+        return "cityCountryDetection";
+      case OneOptOptions.iOS_pasteboardTidStorage:
+        return "pasteboardTidStorage";
+      case OneOptOptions.iOS_keychainTidStorage:
+        return "keychainTidStorage";
+      default:
+        return "";
+    }
+  }
 }

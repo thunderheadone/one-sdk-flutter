@@ -20,6 +20,10 @@
       [self setLogLevel:call result:result];
   } else if ([@"sendInteraction" isEqualToString:call.method]) {
       [self sendInteraction:call result:result];
+  } else if ([@"sendResponseCode" isEqualToString:call.method]) {
+      [self sendResponseCode:call result:result];
+  } else if ([@"optOut" isEqualToString:call.method]) {
+      [self optOut:call result:result];
   } else {
     result(FlutterMethodNotImplemented);
   }
@@ -70,7 +74,7 @@
                                            details:error.localizedDescription]);
             } else {
                 [One processResponse:response];
-                result(response[@"tid"]);
+                result(response);
             }
         }];
     } else {
@@ -81,10 +85,52 @@
                                            details:error.localizedDescription]);
             } else {
                 [One processResponse:response];
-                result(response[@"tid"]);
+                result(response);
             }
         }];
     }
+}
+
+- (void)sendResponseCode:(FlutterMethodCall*)call result:(FlutterResult) result
+{
+    NSString *responseCode = call.arguments[@"responseCode"];
+    NSString *interactionPath = call.arguments[@"interactionPath"];
+    
+    if (!responseCode.length) {
+        return;
+    }
+
+    [One sendResponseCode:responseCode forInteractionPath:interactionPath];
+}
+
+- (void)optOut:(FlutterMethodCall *)call result:(FlutterResult) result
+{
+    NSNumber *optOutValue = call.arguments[@"optOut"];
+    BOOL optOut = optOutValue.boolValue;
+    NSArray *options = call.arguments[@"options"];
+
+    if (![options isKindOfClass:[NSNull class]] && [options isKindOfClass:[NSArray class]]) {
+        if (options.count) {
+            for (NSString *option in options) {
+                NSString *lowercasedOpt = [option lowercaseString];
+                if ([lowercasedOpt isEqualToString:[@"keychainTidStorage" lowercaseString]]) {
+                    [One opt:optOut ? Out : In forOptions:KeychainTidStorage];
+                } else if ([lowercasedOpt isEqualToString:[@"pasteboardTidStorage" lowercaseString]]) {
+                    [One opt:optOut ? Out : In forOptions:PasteboardTidStorage];
+                } else if ([lowercasedOpt isEqualToString:[@"cityCountryDetection" lowercaseString]]) {
+                    [One opt:optOut ? Out : In forOptions:CityCountryDetection];
+                } else if ([lowercasedOpt isEqualToString:[@"allTracking" lowercaseString]]) {
+                    [One opt:optOut ? Out : In forOptions:AllTracking];
+                }
+            }
+        } else {
+            [One opt:optOut ? Out : In forOptions:AllTracking];
+        }
+    
+    } else {
+        [One opt:optOut ? Out : In forOptions:AllTracking];
+    }
+    result(nil);
 }
 
 //TODO: Implement
@@ -220,43 +266,6 @@
 //    }
 //
 //    [One enablePushNotifications:[enablePushNotifications boolValue]];
-//
-//    result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-//    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
-//}
-//
-//- (void)getPushToken:(FlutterMethodCall *)call result:(FlutterResult) result
-//{
-//    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[One getPushToken]];
-//    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
-//}
-//
-//- (void)sendPushToken:(FlutterMethodCall *)call result:(FlutterResult) result
-//{
-//    CDVPluginResult *result;
-//
-//    id pushToken = [command.arguments objectAtIndex:0];
-//    if (!pushToken || (![pushToken isKindOfClass:[NSData class]] && ![pushToken isKindOfClass:[NSString class]])) {
-//        result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"The SDK cannot send a request for a provided push token: it is either a nil or not a NSData or not a NSString object"];
-//        [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
-//        return;
-//    }
-//
-//    if ([pushToken isKindOfClass:[NSString class]]) {
-//        const char *ptr = [pushToken cStringUsingEncoding:NSASCIIStringEncoding];
-//        NSUInteger len = [pushToken length]/2;
-//        NSMutableData *dataPushToken = [NSMutableData dataWithCapacity:len];
-//        while(len--) {
-//            char num[5] = (char[]){ '0', 'x', 0, 0, 0 };
-//            num[2] = *ptr++;
-//            num[3] = *ptr++;
-//            uint8_t n = (uint8_t)strtol(num, NULL, 0);
-//            [dataPushToken appendBytes:&n length:1];
-//        }
-//        [One sendPushToken:dataPushToken];
-//    } else {
-//        [One sendPushToken:pushToken];
-//    }
 //
 //    result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
 //    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];

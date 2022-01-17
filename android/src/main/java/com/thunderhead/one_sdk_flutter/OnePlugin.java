@@ -1,25 +1,30 @@
 package com.thunderhead.one_sdk_flutter;
 
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
 
-import com.thunderhead.One;
-import com.thunderhead.OneModes;
-import com.thunderhead.android.api.configuration.OneConfiguration;
-import com.thunderhead.android.api.interactions.OneCall;
-import com.thunderhead.android.api.interactions.OneCallback;
-import com.thunderhead.android.api.interactions.OneInteractionPath;
-import com.thunderhead.android.api.interactions.OneRequest;
-import com.thunderhead.android.api.logging.Component;
-import com.thunderhead.android.api.logging.LogLevel;
-import com.thunderhead.android.api.logging.OneLoggingConfiguration;
-import com.thunderhead.android.api.responsetypes.OneAPIError;
-import com.thunderhead.android.api.responsetypes.OneResponse;
-import com.thunderhead.android.api.responsetypes.OneSDKError;
+import com.thunderhead.mobile.One;
+import com.thunderhead.mobile.configuration.OneConfiguration;
+import com.thunderhead.mobile.configuration.OneMode;
+import com.thunderhead.mobile.interactions.OneInteractionPath;
+import com.thunderhead.mobile.interactions.OneRequest;
+import com.thunderhead.mobile.interactions.OneResponseCode;
+import com.thunderhead.mobile.interactions.OneResponseCodeRequest;
+import com.thunderhead.mobile.logging.OneLogComponent;
+import com.thunderhead.mobile.logging.OneLogLevel;
+import com.thunderhead.mobile.logging.OneLoggingConfiguration;
+import com.thunderhead.mobile.optout.OneOptOutConfiguration;
+import com.thunderhead.mobile.optout.OneOptInOptions;
+import com.thunderhead.mobile.responsetypes.OneResponse;
 
 import java.net.URI;
+import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ExecutionException;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.BinaryMessenger;
@@ -71,10 +76,17 @@ public class OnePlugin implements MethodCallHandler, FlutterPlugin {
       } catch (Exception e) {
         result.error("Failed to send interaction", e.getLocalizedMessage(), e);
       }
+    } else if (call.method.equals("sendResponseCode")) {
+      final Map<String, String> arguments = call.arguments();
+      String responseCode = (String) arguments.get("responseCode");
+      String interactionPath = (String) arguments.get("interactionPath");
+      sendResponseCode(responseCode, interactionPath, result);
     } else if (call.method.equals("setLogLevel")) {
       setLogLevel(call, result);
     } else if (call.method.equals("initializeOne")) {
       initializeOne(call, result);
+    } else if (call.method.equals("optOut")) {
+      optOut(call, result);
     } else {
       result.notImplemented();
     }
@@ -97,7 +109,7 @@ public class OnePlugin implements MethodCallHandler, FlutterPlugin {
             .userId(userId)
             .host(URI.create(host))
             .touchpoint(URI.create(touchpointURI))
-            .mode(adminMode ? OneModes.ADMIN_MODE : OneModes.USER_MODE)
+            .mode(adminMode ? OneMode.ADMIN : OneMode.USER)
             .build();
     One.setConfiguration(oneConfiguration);
     result.success(true);
@@ -114,15 +126,15 @@ public class OnePlugin implements MethodCallHandler, FlutterPlugin {
 
     if (enabled) {
       oneLoggingConfiguration = OneLoggingConfiguration.builder()
-              .log(LogLevel.VERBOSE)
-              .log(LogLevel.DEBUG)
-              .log(Component.ANY)
+              .log(OneLogLevel.VERBOSE)
+              .log(OneLogLevel.DEBUG)
+              .log(OneLogComponent.ANY)
               .build();
     } else {
       oneLoggingConfiguration = OneLoggingConfiguration.builder()
-              .log(LogLevel.WARN)
-              .log(LogLevel.ERROR)
-              .log(Component.ANY)
+              .log(OneLogLevel.WARN)
+              .log(OneLogLevel.ERROR)
+              .log(OneLogComponent.ANY)
               .build();
     }
 
@@ -130,31 +142,77 @@ public class OnePlugin implements MethodCallHandler, FlutterPlugin {
     result.success("Set Thunderhead LogLevel: " + (enabled ? "Enabled" : "Disabled"));
   }
 
-  private void sendInteraction(String interactionPath, HashMap properties, final Result result) {
+  private void sendInteraction(String interactionPath, HashMap properties, final Result result) throws ExecutionException {
     final OneRequest sendInteractionRequest = new OneRequest.Builder()
             .interactionPath(new OneInteractionPath(URI.create(interactionPath)))
             .properties(properties)
             .build();
 
-    final OneCall sendInteractionCall = One.sendInteraction(sendInteractionRequest);
-    sendInteractionCall.enqueue(new OneCallback() {
-      @Override
-      public void onSuccess(final OneResponse response) {
-        One.processResponse(response);
-        result.success(response.getTid());
-      }
+//    Thread thread = new Thread() {
+//      public void run(){
+//
+//      }
+//    };
+//    thread.start();
 
-      @Override
-      public void onError(OneSDKError error) {
-        result.error(Integer.toString(error.getSystemCode()), error.getLocalizedMessage(), error);
-        Log.e(LOG_TAG, "SDK Error: " +  error.getErrorMessage());
-      }
-
-      @Override
-      public void onFailure(OneAPIError error) {
-        result.error(Integer.toString(error.getHttpStatusCode()), error.getLocalizedMessage(), error);
-        Log.e(LOG_TAG, "Api Error: " +  error.getErrorMessage());
-      }
-    });
+    try {
+      OneResponse response = null;
+//      response = One.sendInteractionLegacySupport(true, sendInteractionRequest).get(10, TimeUnit.SECONDS);
+      response = One.sendInteractionLegacySupport(true, sendInteractionRequest).join();
+      One.processResponse(response);
+      result.success(new HashMap<String, Object>());
+//      result.success(response);
+    } catch (Throwable error) {
+      result.error(Integer.toString(error.hashCode()), error.getLocalizedMessage(), error);
+      Log.e(LOG_TAG, "Execution Exception Error: " +  error.getLocalizedMessage());
+      error.printStackTrace();
+    }
   }
+
+  private void sendResponseCode(String responseCode, String interactionPath, final Result result) {
+    final OneResponseCodeRequest responseCodeRequest = new OneResponseCodeRequest.Builder()
+    .responseCode(new OneResponseCode(responseCode))
+    .interactionPath(new OneInteractionPath(URI.create(interactionPath)))
+    .build();
+
+    try {
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        One.sendResponseCode(responseCodeRequest);
+      } else {
+        One.sendResponseCodeLegacySupport(responseCodeRequest);
+      }
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+    }
+  }
+
+  private void optOut(MethodCall call, final Result result) {
+    OneOptOutConfiguration optOutConfiguration;
+    Set<OneOptInOptions> optInOptions = EnumSet.noneOf(OneOptInOptions.class);
+
+    final HashMap<String, Object> arguments = call.arguments();
+    Boolean optOut = (Boolean) arguments.get("optOut");
+    List<String> options = (List<String>) arguments.get("options");
+
+    if (optOut == null) {
+      optOut = false;
+    }
+
+    if (options != null) {
+      for (String optOutOption : options) {
+        if (optOutOption == "cityCountryDetection") {
+          optInOptions.add(OneOptInOptions.CITY_COUNTRY_DETECTION);
+        }
+      }
+    }
+
+    optOutConfiguration = new OneOptOutConfiguration.Builder()
+            .optOut(optOut)
+            .optInOptions(optInOptions)
+            .build();
+    One.setOptOutConfiguration(optOutConfiguration);
+
+    result.success("Set Thunderhead OptOut: " + (optOut ? "Opted out" : "Opted in"));
+  }
+
 }

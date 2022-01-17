@@ -35,8 +35,9 @@ android {
 }
 
 dependencies {
-    implementation "com.thunderhead.android:one-sdk:9.1.0"
-
+    implementation "com.thunderhead.android:one-sdk:11.1.0"
+    //TODO: Temp workaround, we shouldn't have to import this.
+    implementation group: 'net.sourceforge.streamsupport', name: 'android-retrofuture', version: '1.7.4'
 }
 
 repositories {

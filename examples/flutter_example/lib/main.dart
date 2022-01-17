@@ -129,18 +129,20 @@ class THImage extends StatelessWidget {
 
 class SecondRoute extends StatelessWidget {
   void _sendInteraction(BuildContext context) async {
-    var tid = await One.sendInteraction("/secondPageButton", { 'email' : 'user@address.com' });
-    var alert = AlertDialog(
-      title: Text("Tid Result"),
-      content: Text(tid),
-    );
+    One.sendInteraction("/secondPageButton", { 'email' : 'user@address.com' }).then((response) {
+      var alert = AlertDialog(
+        title: Text("Tid Result"),
+        content: Text(response["tid"]),
+      );
 
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return alert;
-        }
-    );
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return alert;
+          }
+      );
+    });
+
   }
 
   @override

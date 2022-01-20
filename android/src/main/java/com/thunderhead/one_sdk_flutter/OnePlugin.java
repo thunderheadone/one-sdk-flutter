@@ -16,15 +16,21 @@ import com.thunderhead.mobile.logging.OneLogLevel;
 import com.thunderhead.mobile.logging.OneLoggingConfiguration;
 import com.thunderhead.mobile.optout.OneOptOutConfiguration;
 import com.thunderhead.mobile.optout.OneOptInOptions;
+import com.thunderhead.mobile.responsetypes.OneAPIError;
 import com.thunderhead.mobile.responsetypes.OneResponse;
+import com.thunderhead.mobile.responsetypes.OneSDKError;
+import com.thunderhead.mobile.responsetypes.OptimizationPoint;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ExecutorService;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.BinaryMessenger;
@@ -38,6 +44,7 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 public class OnePlugin implements MethodCallHandler, FlutterPlugin {
   protected static final String LOG_TAG = "OnePlugin";
   private MethodChannel methodChannel;
+  private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
   /** Plugin registration. */
   /** We are keeping the registerWith() method to remain compatible with apps that don’t use the v2 Android embedding */
@@ -142,31 +149,40 @@ public class OnePlugin implements MethodCallHandler, FlutterPlugin {
     result.success("Set Thunderhead LogLevel: " + (enabled ? "Enabled" : "Disabled"));
   }
 
-  private void sendInteraction(String interactionPath, HashMap properties, final Result result) throws ExecutionException {
+  private void sendInteraction(String interactionPath, HashMap properties, final Result result) {
     final OneRequest sendInteractionRequest = new OneRequest.Builder()
             .interactionPath(new OneInteractionPath(URI.create(interactionPath)))
             .properties(properties)
             .build();
-
-//    Thread thread = new Thread() {
-//      public void run(){
-//
-//      }
-//    };
-//    thread.start();
-
-    try {
-      OneResponse response = null;
-//      response = One.sendInteractionLegacySupport(true, sendInteractionRequest).get(10, TimeUnit.SECONDS);
-      response = One.sendInteractionLegacySupport(true, sendInteractionRequest).join();
-      One.processResponse(response);
-      result.success(new HashMap<String, Object>());
-//      result.success(response);
-    } catch (Throwable error) {
-      result.error(Integer.toString(error.hashCode()), error.getLocalizedMessage(), error);
-      Log.e(LOG_TAG, "Execution Exception Error: " +  error.getLocalizedMessage());
-      error.printStackTrace();
-    }
+    executor.submit(() -> {
+      OneResponse response;
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+         try {
+        response = One.sendInteraction(sendInteractionRequest).join();
+        HashMap<String, Object> responseMap = responseObjectToHashMap(response);
+          result.success(responseMap);
+        } catch (ExecutionException error) {
+          result.error(Integer.toString(error.hashCode()), error.getLocalizedMessage(), error);
+          Log.e(LOG_TAG, "Completion Error: " + error.getCause());
+        } catch (OneSDKError error) {
+          result.error(Integer.toString(error.getSystemCode()), error.getLocalizedMessage(), error);
+          Log.e(LOG_TAG, "SDK Error: " + error.getErrorMessage());
+        } catch (OneAPIError error) {
+          result.error(Integer.toString(error.getHttpStatusCode()), error.getLocalizedMessage(), error);
+          Log.e(LOG_TAG, "Api Error: " + error.getErrorMessage());
+        }
+      } else {
+        try {
+          response = One.sendInteractionLegacySupport(sendInteractionRequest).join();
+          HashMap<String, Object> responseMap = responseObjectToHashMap(response);
+          result.success(responseMap);
+        } catch (ExecutionException error) {
+          result.error(Integer.toString(error.hashCode()), error.getLocalizedMessage(), error);
+          Log.e(LOG_TAG, "Execution Exception Error: " + error.getLocalizedMessage());
+          error.printStackTrace();
+        }
+      }
+    });
   }
 
   private void sendResponseCode(String responseCode, String interactionPath, final Result result) {
@@ -213,6 +229,36 @@ public class OnePlugin implements MethodCallHandler, FlutterPlugin {
     One.setOptOutConfiguration(optOutConfiguration);
 
     result.success("Set Thunderhead OptOut: " + (optOut ? "Opted out" : "Opted in"));
+  }
+
+  // Helper methods
+
+  private HashMap<String, Object> responseObjectToHashMap(OneResponse response) {
+      // Convert Class object to HashMap so Dart can read it.
+      HashMap<String, Object> responseMap = new HashMap<>();
+      responseMap.put("tid", response.getTid());
+      responseMap.put("interactionPath", response.getInteractionPath().getValue().getPath());
+
+      if (!response.getOptimizationPoints().isEmpty()) {
+        List<HashMap<String, Object>> optimizationsList = new ArrayList<>();
+
+        HashMap<String, Object> optimizationPointMap = new HashMap<>();
+
+        for (OptimizationPoint point : response.getOptimizationPoints()) {
+          optimizationPointMap.put("data", point.getData());
+          optimizationPointMap.put("path", point.getPath());
+          optimizationPointMap.put("responseId", point.getResponseId());
+          optimizationPointMap.put("dataMimeType", point.getDataMimeType());
+          optimizationPointMap.put("directives", point.getDirectives());
+          optimizationPointMap.put("name", point.getName());
+          optimizationPointMap.put("viewPointName", point.getViewPointName());
+          optimizationPointMap.put("viewPointId", point.getViewPointId());
+          optimizationsList.add(optimizationPointMap);
+        }
+
+        responseMap.put("optimizationPoints",  optimizationsList);
+      }
+      return responseMap;
   }
 
 }

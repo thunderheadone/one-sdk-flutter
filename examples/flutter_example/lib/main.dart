@@ -55,12 +55,18 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    One.initializeOne(SITE_KEY, TOUCHPOINT, API_KEY, SHARED_SECRET, USER_ID, HOST, false);
-    One.setThunderheadLogLevel(true);
-
     // Calling this in `initState()` for demonstration purposes.
-    // When to send these Interaction requests should be aligned with your business use cases rather than follow exactly this code placement.
-    One.sendInteraction("/home", null);
+
+    One.initializeOne(SITE_KEY, TOUCHPOINT, API_KEY, SHARED_SECRET, USER_ID, HOST, false).then((_) {
+      One.setThunderheadLogLevel(true);
+        
+      // When to send these Interaction requests should be aligned with your business use cases rather than follow exactly this code placement.
+      One.sendInteraction("/home", null).then((response) {
+        print('response tid = ${response["tid"]}');
+        print('response interaction path = ${response["interactionPath"]}');
+        print('response optimization points = ${response["optimizationPoints"]}');
+      });
+    });
   }
 
   @override

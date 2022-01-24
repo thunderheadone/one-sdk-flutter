@@ -55,16 +55,17 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    // Calling this in `initState()` for demonstration purposes.
+    // One.optOut(true);
 
+    // Calling this in `initState()` for demonstration purposes.
     One.initializeOne(SITE_KEY, TOUCHPOINT, API_KEY, SHARED_SECRET, USER_ID, HOST, false).then((_) {
       One.setThunderheadLogLevel(true);
         
       // When to send these Interaction requests should be aligned with your business use cases rather than follow exactly this code placement.
       One.sendInteraction("/home", null).then((response) {
-        print('response tid = ${response["tid"]}');
-        print('response interaction path = ${response["interactionPath"]}');
-        print('response optimization points = ${response["optimizationPoints"]}');
+        print('Interaction response tid = ${response[oneResponseTidKey]}');
+        print('Interaction response Interaction path = ${response[oneResponseInteractionPathKey]}');
+        print('Interaction response optimization points = ${response[oneResponseOptimizationPointsKey]}');
       });
     });
   }
@@ -138,7 +139,7 @@ class SecondRoute extends StatelessWidget {
     One.sendInteraction("/secondPageButton", { 'email' : 'user@address.com' }).then((response) {
       var alert = AlertDialog(
         title: Text("Tid Result"),
-        content: Text(response["tid"]),
+        content: Text(response[oneResponseTidKey]),
       );
 
       showDialog(

@@ -123,7 +123,7 @@ public class OnePlugin implements MethodCallHandler, FlutterPlugin {
                 .mode(adminMode ? OneMode.ADMIN : OneMode.USER)
                 .build();
         One.setConfiguration(oneConfiguration);
-        result.success(true);
+        result.success(null);
     }
 
     private void setLogLevel(MethodCall call, final Result result) {

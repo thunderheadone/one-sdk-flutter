@@ -76,30 +76,35 @@ public class OnePlugin implements MethodCallHandler, FlutterPlugin {
 
     @Override
     public void onMethodCall(MethodCall call, Result result) {
-        if (call.method.equals("getPlatformVersion")) {
-            result.success("Android " + android.os.Build.VERSION.RELEASE);
-        } else if (call.method.equals("sendInteraction")) {
-            final Map<String, Object> arguments = call.arguments();
-            String interactionPath = (String) arguments.get("interactionPath");
-            HashMap<String, Object> properties = (HashMap) arguments.get("properties");
-            try {
-                sendInteraction(interactionPath, properties, result);
-            } catch (Exception e) {
-                result.error("Failed to send interaction", e.getLocalizedMessage(), e);
+        try {
+            if (call.method.equals("getPlatformVersion")) {
+                result.success("Android " + android.os.Build.VERSION.RELEASE);
+            } else if (call.method.equals("sendInteraction")) {
+                final Map<String, Object> arguments = call.arguments();
+                String interactionPath = (String) arguments.get("interactionPath");
+                HashMap<String, Object> properties = (HashMap) arguments.get("properties");
+                try {
+                    sendInteraction(interactionPath, properties, result);
+                } catch (Exception e) {
+                    result.error("Failed to send interaction", e.getLocalizedMessage(), e);
+                }
+            } else if (call.method.equals("sendResponseCode")) {
+                final Map<String, String> arguments = call.arguments();
+                String responseCode = (String) arguments.get("responseCode");
+                String interactionPath = (String) arguments.get("interactionPath");
+                sendResponseCode(responseCode, interactionPath, result);
+            } else if (call.method.equals("setLogLevel")) {
+                setLogLevel(call, result);
+            } else if (call.method.equals("initializeOne")) {
+                initializeOne(call, result);
+            } else if (call.method.equals("optOut")) {
+                optOut(call, result);
+            } else {
+                result.notImplemented();
             }
-        } else if (call.method.equals("sendResponseCode")) {
-            final Map<String, String> arguments = call.arguments();
-            String responseCode = (String) arguments.get("responseCode");
-            String interactionPath = (String) arguments.get("interactionPath");
-            sendResponseCode(responseCode, interactionPath, result);
-        } else if (call.method.equals("setLogLevel")) {
-            setLogLevel(call, result);
-        } else if (call.method.equals("initializeOne")) {
-            initializeOne(call, result);
-        } else if (call.method.equals("optOut")) {
-            optOut(call, result);
-        } else {
-            result.notImplemented();
+        } catch (Exception error) {
+            Log.e(LOG_TAG, "[Thunderhead] Method Call Exception Error: " + error.getLocalizedMessage());
+            result.error(Integer.toString(error.hashCode()), error.getLocalizedMessage(), error);
         }
     }
 
@@ -261,9 +266,10 @@ public class OnePlugin implements MethodCallHandler, FlutterPlugin {
 
         if (!response.getOptimizationPoints().isEmpty()) {
             List<HashMap<String, Object>> optimizationsList = new ArrayList<>();
-            HashMap<String, Object> optimizationPointMap = new HashMap<>();
 
             for (OptimizationPoint point : response.getOptimizationPoints()) {
+                HashMap<String, Object> optimizationPointMap = new HashMap<>();
+
                 optimizationPointMap.put("data", point.getData());
                 optimizationPointMap.put("path", point.getPath());
                 optimizationPointMap.put("responseId", point.getResponseId());

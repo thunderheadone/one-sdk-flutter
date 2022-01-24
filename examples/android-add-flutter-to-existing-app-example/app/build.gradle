@@ -32,6 +32,9 @@ android {
     buildFeatures {
         viewBinding true
     }
+    packagingOptions {
+        pickFirst '**/*.so'
+    }
 }
 
 dependencies {
@@ -50,5 +53,5 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    implementation "com.thunderhead.android:one-sdk:9.1.0"
+    implementation "com.thunderhead.android:one-sdk:11.1.0"
 }

@@ -241,15 +241,37 @@ public class OnePlugin implements MethodCallHandler, FlutterPlugin {
                     One.setOptOutConfiguration(optOutConfiguration);
                 }
                 if (optOutOption.equals("allTracking")) {
+                    // Configure all opt-out settings.
+
+                    // Configures opt-out settings for tracking.
                     optOutConfiguration = new OneOptOutConfiguration.Builder()
                             .optOut(optOut)
+                            .build();
+                    One.setOptOutConfiguration(optOutConfiguration);
+
+                    // Configures opt-out settings for other options.
+                    Set<OneOptInOptions> allOptInOptions = EnumSet.allOf(OneOptInOptions.class);
+                    optOutConfiguration = new OneOptOutConfiguration.Builder()
+                            .optOut(optOut)
+                            .optInOptions(allOptInOptions)
                             .build();
                     One.setOptOutConfiguration(optOutConfiguration);
                 }
             }
         } else {
+            // Opt out of everything if no `options` parameter is provided.
+
+            // Configures opt-out settings for tracking.
             optOutConfiguration = new OneOptOutConfiguration.Builder()
                     .optOut(optOut)
+                    .build();
+            One.setOptOutConfiguration(optOutConfiguration);
+
+            // Configures opt-out settings for other options.
+            Set<OneOptInOptions> allOptInOptions = EnumSet.allOf(OneOptInOptions.class);
+            optOutConfiguration = new OneOptOutConfiguration.Builder()
+                    .optOut(optOut)
+                    .optInOptions(allOptInOptions)
                     .build();
             One.setOptOutConfiguration(optOutConfiguration);
         }

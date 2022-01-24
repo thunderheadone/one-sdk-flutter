@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 
 const String oneResponseTidKey = 'tid';
 const String oneResponseInteractionPathKey = 'interactionPath';
-const String oneResponseOptimizationPointsKey = 'optimizationPoints';
+const String oneResponseOptimizationPointsKey = 'optimizations';
 
 const String oneOptimizationPointDataKey = 'data';
 const String oneOptimizationPointPathKey = 'path';

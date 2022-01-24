@@ -275,7 +275,7 @@ public class OnePlugin implements MethodCallHandler, FlutterPlugin {
                 optimizationsList.add(optimizationPointMap);
             }
 
-            responseMap.put("optimizationPoints", optimizationsList);
+            responseMap.put("optimizations", optimizationsList);
         }
         return responseMap;
     }

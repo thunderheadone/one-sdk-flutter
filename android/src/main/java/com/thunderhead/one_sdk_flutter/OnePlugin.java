@@ -150,7 +150,7 @@ public class OnePlugin implements MethodCallHandler, FlutterPlugin {
         }
 
         One.setLoggingConfiguration(oneLoggingConfiguration);
-        result.success("Set Thunderhead LogLevel: " + (enabled ? "Enabled" : "Disabled"));
+        result.success(null);
     }
 
     private void sendInteraction(String interactionPath, HashMap properties, final Result result) {
@@ -163,26 +163,28 @@ public class OnePlugin implements MethodCallHandler, FlutterPlugin {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 try {
                     response = One.sendInteraction(sendInteractionRequest).join();
+                    One.processResponse(response);
                     HashMap<String, Object> responseMap = responseObjectToHashMap(response);
                     result.success(responseMap);
                 } catch (ExecutionException error) {
                     result.error(Integer.toString(error.hashCode()), error.getLocalizedMessage(), error);
-                    Log.e(LOG_TAG, "Completion Error: " + error.getCause());
+                    Log.e(LOG_TAG, "[Thunderhead] Completion Error: " + error.getCause());
                 } catch (OneSDKError error) {
                     result.error(Integer.toString(error.getSystemCode()), error.getLocalizedMessage(), error);
-                    Log.e(LOG_TAG, "SDK Error: " + error.getErrorMessage());
+                    Log.e(LOG_TAG, "[Thunderhead] SDK Error: " + error.getErrorMessage());
                 } catch (OneAPIError error) {
                     result.error(Integer.toString(error.getHttpStatusCode()), error.getLocalizedMessage(), error);
-                    Log.e(LOG_TAG, "Api Error: " + error.getErrorMessage());
+                    Log.e(LOG_TAG, "[Thunderhead] Api Error: " + error.getErrorMessage());
                 }
             } else {
                 try {
                     response = One.sendInteractionLegacySupport(sendInteractionRequest).join();
+                    One.processResponse(response);
                     HashMap<String, Object> responseMap = responseObjectToHashMap(response);
                     result.success(responseMap);
                 } catch (ExecutionException error) {
                     result.error(Integer.toString(error.hashCode()), error.getLocalizedMessage(), error);
-                    Log.e(LOG_TAG, "Execution Exception Error: " + error.getLocalizedMessage());
+                    Log.e(LOG_TAG, "[Thunderhead] Execution Exception Error: " + error.getLocalizedMessage());
                     error.printStackTrace();
                 }
             }
@@ -199,18 +201,20 @@ public class OnePlugin implements MethodCallHandler, FlutterPlugin {
             try {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     One.sendResponseCode(responseCodeRequest);
+                    result.success(null);
                 } else {
                     One.sendResponseCodeLegacySupport(responseCodeRequest);
+                    result.success(null);
                 }
-            } catch (ExecutionException e) {
-                e.printStackTrace();
+            } catch (ExecutionException error) {
+                result.error(Integer.toString(error.hashCode()), error.getLocalizedMessage(), error);
+                error.printStackTrace();
             }
         });
     }
 
     private void optOut(MethodCall call, final Result result) {
         OneOptOutConfiguration optOutConfiguration;
-        Set<OneOptInOptions> optInOptions = EnumSet.noneOf(OneOptInOptions.class);
 
         final HashMap<String, Object> arguments = call.arguments();
         Boolean optOut = (Boolean) arguments.get("optOut");
@@ -220,28 +224,37 @@ public class OnePlugin implements MethodCallHandler, FlutterPlugin {
             optOut = false;
         }
 
-        if (options != null) {
+        if (options != null && !options.isEmpty()) {
             for (String optOutOption : options) {
-                if (optOutOption == "cityCountryDetection") {
+                if (optOutOption.equals("cityCountryDetection")) {
+                    Set<OneOptInOptions> optInOptions = EnumSet.noneOf(OneOptInOptions.class);
                     optInOptions.add(OneOptInOptions.CITY_COUNTRY_DETECTION);
+                    optOutConfiguration = new OneOptOutConfiguration.Builder()
+                            .optOut(optOut)
+                            .optInOptions(optInOptions)
+                            .build();
+                    One.setOptOutConfiguration(optOutConfiguration);
+                }
+                if (optOutOption.equals("allTracking")) {
+                    optOutConfiguration = new OneOptOutConfiguration.Builder()
+                            .optOut(optOut)
+                            .build();
+                    One.setOptOutConfiguration(optOutConfiguration);
                 }
             }
+        } else {
+            optOutConfiguration = new OneOptOutConfiguration.Builder()
+                    .optOut(optOut)
+                    .build();
+            One.setOptOutConfiguration(optOutConfiguration);
         }
-
-        optOutConfiguration = new OneOptOutConfiguration.Builder()
-                .optOut(optOut)
-                .optInOptions(optInOptions)
-                .build();
-        One.setOptOutConfiguration(optOutConfiguration);
-
-        result.success("Set Thunderhead OptOut: " + (optOut ? "Opted out" : "Opted in"));
+        result.success(null);
     }
 
     // Helper methods
 
     // Convert OneResponse Class to HashMap so Dart can read it.
     private HashMap<String, Object> responseObjectToHashMap(OneResponse response) {
-
         HashMap<String, Object> responseMap = new HashMap<>();
         responseMap.put("tid", response.getTid());
         responseMap.put("interactionPath", response.getInteractionPath().getValue().getPath());

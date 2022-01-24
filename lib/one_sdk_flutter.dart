@@ -2,6 +2,19 @@ import 'dart:async';
 import 'dart:collection';
 import 'package:flutter/services.dart';
 
+const String oneResponseTidKey = 'tid';
+const String oneResponseInteractionPathKey = 'interactionPath';
+const String oneResponseOptimizationPointsKey = 'optimizationPoints';
+
+const String oneOptimizationPointDataKey = 'data';
+const String oneOptimizationPointPathKey = 'path';
+const String oneOptimizationPointResponseIdKey = 'responseId';
+const String oneOptimizationPointDataMimeTypeKey = 'dataMimeType';
+const String oneOptimizationPointDirectivesKey = 'directives';
+const String oneOptimizationPointNameKey = 'name';
+const String oneOptimizationPointViewPointNameKey = 'viewPointName';
+const String oneOptimizationPointViewPointIdKey = 'viewPointId';
+
 class One {
   static const MethodChannel _channel = const MethodChannel('one_sdk_flutter');
 
@@ -14,27 +27,30 @@ class One {
     return "1.1.0";
   }
 
+  /// Send an Interaction to the Thunderhead API.
+  /// 
+  /// Returns a [Future<Map>] containing response data.
   static Future<Map> sendInteraction(String interactionPath, Map properties) async {
     var interactionPropertiesMap = <String, dynamic>{
       'interactionPath': interactionPath,
       'properties': properties
     };
-    return _channel.invokeMethod('sendInteraction', interactionPropertiesMap);
+    return await _channel.invokeMethod('sendInteraction', interactionPropertiesMap);
   }
 
-  static Future<String> sendResponseCode(String responseCode, String interactionPath) async {
+  /// Send an Response Code to the Thunderhead API.
+  static Future<void> sendResponseCode(String responseCode, String interactionPath) async {
     var responseCodeMap = <String, String>{
       'responseCode': responseCode,
       'interactionPath': interactionPath
     };
-    return _channel.invokeMethod('sendResponseCode', responseCodeMap);
+    await _channel.invokeMethod('sendResponseCode', responseCodeMap);
   }
 
   /// Configure Thunderhead logging
   static Future<void> setThunderheadLogLevel(bool allOrNone) async {
     var logMap = <String, bool>{'logLevel': allOrNone};
-    var result = await _channel.invokeMethod('setLogLevel', logMap);
-    print(result);
+    await _channel.invokeMethod('setLogLevel', logMap);
   }
 
   /// Configure the Thunderhead SDK.
@@ -57,46 +73,45 @@ class One {
       'host': host,
       'adminMode': adminMode
     };
-    var result = await _channel.invokeMethod('initializeOne', initParameters);
-    print(result);
+    await _channel.invokeMethod('initializeOne', initParameters);
   }
 
   /// Configure optOut settings.
   ///
   /// Privacy compliance method to completely stop tracking a customer's actions.
   /// By default, the Thunderhead SDK is opted in for all settings.
+  ///
+  /// When opted out, tracking will stop and locally queued data will be removed.
+  /// At any point you can opt a user back in by passing false into the same method.
   static Future<void> optOut(bool optOut, [List<OneOptOptions> options]) async {
     List<String> optOutList = [];
     if (options != null) {
       for (var optOutOption in options) {
-        optOutList.add(optOutOption.value);
+        optOutList.add(optOutOption.asString);
       }
     }
-
     var optOutMap = <String, Object>{'optOut': optOut, 'options': optOutList};
-    var result = await _channel.invokeMethod('optOut', optOutMap);
-    print(result);
+    await _channel.invokeMethod('optOut', optOutMap);
   }
 }
 
 /// OptOut configuration options.
-///
-/// [OneOptOptions.allTracking] : Opts out of all tracking.
-///
-/// [OneOptOptions.cityCountryDetection] : Use this option to opt an end-user out or in of all city/country level tracking.
-///
-/// [OneOptOptions.iOS_keychainTidStorage] : iOS specific option to opt out of keychain storage.
-///
-/// [OneOptOptions.iOS_pasteboardTidStorage] : iOS specific option to opt out of pasteboard tid storage.
 enum OneOptOptions {
+  /// Opts out of all tracking.
   allTracking,
+
+  /// Use this option to opt an end-user out or in of all city/country level tracking.
   cityCountryDetection,
+
+  /// iOS platform specific option to opt out of keychain storage.
   iOS_keychainTidStorage,
+
+  /// iOS platform specific option to opt out of pasteboard tid storage.
   iOS_pasteboardTidStorage
 }
 
-extension StringValue on OneOptOptions {
-  String get value {
+extension OneOptOptionsStringValue on OneOptOptions {
+  String get asString {
     switch (this) {
       case OneOptOptions.allTracking:
         return "allTracking";

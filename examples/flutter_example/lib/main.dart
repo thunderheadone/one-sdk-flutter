@@ -149,7 +149,6 @@ class SecondRoute extends StatelessWidget {
           }
       );
     });
-
   }
 
   @override

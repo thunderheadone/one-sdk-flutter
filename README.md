@@ -84,7 +84,7 @@ One.sendResponseCode("code", "/interactionPath");
 ### Opt an end-user out of tracking
 To opt an end-user out of all tracking options, when the end-user does not give permission to be tracked in the client app, call the following method:
 ```dart
-// Opts out of all tracking options.
+// Opts out of all tracking options.  
 One.optOut(true);
 // or
 One.optOut(true, [OneOptOptions.allTracking]);
@@ -98,6 +98,14 @@ One.optOut(true, [OneOptOptions.cityCountryDetection]);
 One.optOut(true, [OneOptOptions.iOS_keychainTidStorage]);
 // iOS platform specific option to opt out of pasteboard tid storage.
 One.optOut(true, [OneOptOptions.iOS_pasteboardTidStorage]);
+```
+
+To opt back in, call the following method:
+```dart
+// Opt in for all tracking options.
+One.optOut(false);
+// or
+One.optOut(false, [OneOptOptions.allTracking]);
 ```
 
 ### Access debug information

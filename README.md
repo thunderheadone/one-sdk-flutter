@@ -3,7 +3,7 @@
 The Thunderhead ONE SDK Flutter Plugin for iOS and Android.
 
 ## Examples
-Check out the [examples](https://github.com/thunderheadone/one-sdk-flutter/tree/master/examples/) folder to see integration examples.
+To see integration examples, see [examples](https://github.com/thunderheadone/one-sdk-flutter/tree/master/examples/). 
 
 ## Installation
 To install the Thunderhead ONE Flutter Plugin, go to your `pubspec.yaml` and add the dependency:
@@ -55,7 +55,7 @@ One.initializeOne(SITE_KEY, TOUCHPOINT, API_KEY, SHARED_SECRET, USER_ID, HOST, f
 ### Send an Interaction 
 To send an Interaction request without properties, call the following method:
 ```dart
-One.sendInteraction("/interactionPath", null);
+One.sendInteraction("/interactionPath");
 ```
 * See example of usage [here](https://github.com/thunderheadone/one-sdk-flutter/tree/master/examples/flutter_example/lib/main.dart#L60)
 
@@ -64,6 +64,41 @@ To send an Interaction request with properties, call the following method:
 One.sendInteraction("/interactionPath", { 'key' : 'value' });
 ```
 * See example of usage [here](https://github.com/thunderheadone/one-sdk-flutter/tree/master/examples/flutter_example/lib/main.dart#L128)
+
+To send an Interaction request and retrieve the response, call the following method:
+```dart
+One.sendInteraction("/interactionPath").then((response) {
+    print('Interaction response tid = ${response[oneResponseTidKey]}');
+    print('Interaction response Interaction path = ${response[oneResponseInteractionPathKey]}');
+    print('Interaction response optimization points = ${response[oneResponseOptimizationPointsKey]}');
+});
+```
+
+### Send a response code
+To send a response code, call the following method:
+```dart
+One.sendResponseCode("code", "/interactionPath");
+```
+
+### Opt an end-user out of tracking
+
+To opt an end-user out of all tracking options, when the end-user does not give permission to be tracked in the client app, call the following method:
+```dart
+// Opts out of all tracking options.
+One.optOut(true);
+// or
+One.optOut(true, [OneOptOptions.allTracking]);
+```
+
+To opt out of specific tracking options, you can pass an array of `OneOptOptions` parameters:
+```dart
+// Use this option to opt an end-user out or in of all city/country level tracking.
+One.optOut(true, [OneOptOptions.cityCountryDetection]);
+// iOS platform specific option to opt out of keychain storage.
+One.optOut(true, [OneOptOptions.iOS_keychainTidStorage]);
+// iOS platform specific option to opt out of pasteboard tid storage.
+One.optOut(true, [OneOptOptions.iOS_pasteboardTidStorage]);
+```
 
 ### Access debug information
 To configure logging, call the following method:

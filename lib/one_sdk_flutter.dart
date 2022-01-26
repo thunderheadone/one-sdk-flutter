@@ -30,7 +30,7 @@ class One {
   /// Send an Interaction to the Thunderhead API.
   /// 
   /// Returns a [Future<Map>] containing response data.
-  static Future<Map> sendInteraction(String interactionPath, Map properties) async {
+  static Future<Map> sendInteraction(String interactionPath, [Map properties]) async {
     var interactionPropertiesMap = <String, dynamic>{
       'interactionPath': interactionPath,
       'properties': properties

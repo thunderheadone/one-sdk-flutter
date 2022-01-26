@@ -62,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
       One.setThunderheadLogLevel(true);
         
       // When to send these Interaction requests should be aligned with your business use cases rather than follow exactly this code placement.
-      One.sendInteraction("/home", null).then((response) {
+      One.sendInteraction("/home").then((response) {
         print('Interaction response tid = ${response[oneResponseTidKey]}');
         print('Interaction response Interaction path = ${response[oneResponseInteractionPathKey]}');
         print('Interaction response optimization points = ${response[oneResponseOptimizationPointsKey]}');

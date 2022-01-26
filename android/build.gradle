@@ -44,7 +44,7 @@ android {
 }
 
 dependencies {
-    implementation "com.thunderhead.android:one-sdk:11.1.0"
+    implementation "com.thunderhead.android:one-sdk:11.1.1"
 }
 
 repositories {

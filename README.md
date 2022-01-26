@@ -50,20 +50,20 @@ import 'package:one_sdk_flutter/one_sdk_flutter.dart';
 
 One.initializeOne(SITE_KEY, TOUCHPOINT, API_KEY, SHARED_SECRET, USER_ID, HOST, false);
 ```
-* See example of usage [here](https://github.com/thunderheadone/one-sdk-flutter/tree/master/examples/flutter_example/lib/main.dart#L58)
+* See example of usage [here](https://github.com/thunderheadone/one-sdk-flutter/tree/master/examples/flutter_example/lib/main.dart#L61)
 
 ### Send an Interaction 
 To send an Interaction request without properties, call the following method:
 ```dart
 One.sendInteraction("/interactionPath");
 ```
-* See example of usage [here](https://github.com/thunderheadone/one-sdk-flutter/tree/master/examples/flutter_example/lib/main.dart#L60)
+* See example of usage [here](https://github.com/thunderheadone/one-sdk-flutter/tree/master/examples/flutter_example/lib/main.dart#L158)
 
 To send an Interaction request with properties, call the following method:
 ```dart
 One.sendInteraction("/interactionPath", { 'key' : 'value' });
 ```
-* See example of usage [here](https://github.com/thunderheadone/one-sdk-flutter/tree/master/examples/flutter_example/lib/main.dart#L128)
+* See example of usage [here](https://github.com/thunderheadone/one-sdk-flutter/tree/master/examples/flutter_example/lib/main.dart#L139)
 
 To send an Interaction request and retrieve the response, call the following method:
 ```dart
@@ -73,6 +73,7 @@ One.sendInteraction("/interactionPath").then((response) {
     print('Interaction response optimization points = ${response[oneResponseOptimizationPointsKey]}');
 });
 ```
+* See example of usage [here](https://github.com/thunderheadone/one-sdk-flutter/tree/master/examples/flutter_example/lib/main.dart#L65)
 
 ### Send a response code
 To send a response code, call the following method:
@@ -81,7 +82,6 @@ One.sendResponseCode("code", "/interactionPath");
 ```
 
 ### Opt an end-user out of tracking
-
 To opt an end-user out of all tracking options, when the end-user does not give permission to be tracked in the client app, call the following method:
 ```dart
 // Opts out of all tracking options.

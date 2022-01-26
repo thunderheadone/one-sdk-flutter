@@ -155,7 +155,7 @@ class SecondRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     // Calling this in `build()` for demonstration purposes.
     // When to send these Interaction requests should be aligned with your business use cases rather than follow exactly this code placement.
-    One.sendInteraction("/secondPage", null);
+    One.sendInteraction("/secondPage");
 
     return Scaffold(
       appBar: AppBar(title: Text("Second Page")),

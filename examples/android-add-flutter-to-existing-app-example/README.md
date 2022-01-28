@@ -7,7 +7,8 @@ For instructions integrating Flutter modules to your existing applications,
 see the [add-to-app documentation](https://flutter.dev/docs/development/add-to-app).
 
 ## Requirements
-* Flutter Version: v1.22.0+ (stable).
+* Flutter Version: v1.22.0+ (stable). 
+* Latest Flutter Version is recommended.
 
 ## Table of Contents 
 * [Getting Started](#getting-started)

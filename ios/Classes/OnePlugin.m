@@ -3,6 +3,11 @@
 
 @implementation OnePlugin
 
+static const NSString *LOG_TAG = @"OnePlugin";
+typedef NS_ENUM(NSUInteger, OnePluginErrorCode) {
+    OnePluginSendResponseCodeError = 100
+};
+
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
   FlutterMethodChannel* channel = [FlutterMethodChannel
       methodChannelWithName:@"one_sdk_flutter"
@@ -97,10 +102,14 @@
     NSString *interactionPath = call.arguments[@"interactionPath"];
     
     if (!responseCode.length) {
+        result([FlutterError errorWithCode:[NSString stringWithFormat:@"Error: %ld", OnePluginSendResponseCodeError]
+                                   message:LOG_TAG
+                                   details:@"Send Response Code Error. Response code cannot be null or empty"]);
         return;
     }
-
+    
     [One sendResponseCode:responseCode forInteractionPath:interactionPath];
+    result(nil);
 }
 
 - (void)optOut:(FlutterMethodCall *)call result:(FlutterResult) result

@@ -132,7 +132,6 @@ public class OnePlugin implements MethodCallHandler, FlutterPlugin {
     }
 
     private void setLogLevel(MethodCall call, final Result result) {
-        OneLoggingConfiguration oneLoggingConfiguration;
         final Map<String, Boolean> arguments = call.arguments();
         Boolean enabled = arguments.get("logLevel");
 
@@ -140,63 +139,47 @@ public class OnePlugin implements MethodCallHandler, FlutterPlugin {
             enabled = true;
         }
 
+        OneLoggingConfiguration.Builder builder = OneLoggingConfiguration.builder().log(OneLogComponent.ANY);
         if (enabled) {
-            oneLoggingConfiguration = OneLoggingConfiguration.builder()
-                    .log(OneLogLevel.VERBOSE)
-                    .log(OneLogLevel.DEBUG)
-                    .log(OneLogComponent.ANY)
-                    .build();
+            builder.log(OneLogLevel.VERBOSE).log(OneLogLevel.DEBUG);
         } else {
-            oneLoggingConfiguration = OneLoggingConfiguration.builder()
-                    .log(OneLogLevel.WARN)
-                    .log(OneLogLevel.ERROR)
-                    .log(OneLogComponent.ANY)
-                    .build();
+            builder.log(OneLogLevel.WARN).log(OneLogLevel.ERROR);
         }
 
-        One.setLoggingConfiguration(oneLoggingConfiguration);
+        One.setLoggingConfiguration(builder.build());
         result.success(null);
     }
 
-    private void sendInteraction(String interactionPath, HashMap properties, final Result result) {
+    private void sendInteraction(final String interactionPath, final HashMap properties, final Result result) {
         final OneRequest sendInteractionRequest = new OneRequest.Builder()
                 .interactionPath(new OneInteractionPath(URI.create(interactionPath)))
                 .properties(properties)
                 .build();
         executor.submit(() -> {
-            OneResponse response;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                try {
-                    response = One.sendInteraction(sendInteractionRequest).join();
-                    One.processResponse(response);
-                    HashMap<String, Object> responseMap = responseObjectToHashMap(response);
-                    result.success(responseMap);
-                } catch (ExecutionException error) {
-                    result.error(Integer.toString(error.hashCode()), error.getLocalizedMessage(), error);
-                    Log.e(LOG_TAG, "[Thunderhead] Completion Error: " + error.getCause());
-                } catch (OneSDKError error) {
-                    result.error(Integer.toString(error.getSystemCode()), error.getLocalizedMessage(), error);
-                    Log.e(LOG_TAG, "[Thunderhead] SDK Error: " + error.getErrorMessage());
-                } catch (OneAPIError error) {
-                    result.error(Integer.toString(error.getHttpStatusCode()), error.getLocalizedMessage(), error);
-                    Log.e(LOG_TAG, "[Thunderhead] Api Error: " + error.getErrorMessage());
+            try {
+                OneResponse response;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    response = One.sendInteraction(true, sendInteractionRequest).join();
+                } else {
+                    response = One.sendInteractionLegacySupport(true, sendInteractionRequest).join();
                 }
-            } else {
-                try {
-                    response = One.sendInteractionLegacySupport(sendInteractionRequest).join();
-                    One.processResponse(response);
-                    HashMap<String, Object> responseMap = responseObjectToHashMap(response);
-                    result.success(responseMap);
-                } catch (ExecutionException error) {
-                    result.error(Integer.toString(error.hashCode()), error.getLocalizedMessage(), error);
-                    Log.e(LOG_TAG, "[Thunderhead] Execution Exception Error: " + error.getLocalizedMessage());
-                    error.printStackTrace();
-                }
+                One.processResponse(response);
+                HashMap<String, Object> responseMap = responseObjectToHashMap(response);
+                result.success(responseMap);
+            } catch (ExecutionException error) {
+                result.error(Integer.toString(error.hashCode()), error.getLocalizedMessage(), error);
+                Log.e(LOG_TAG, "[Thunderhead] Send Interaction Completion Error: " + error.getCause());
+            } catch (OneSDKError error) {
+                result.error(Integer.toString(error.getSystemCode()), error.getLocalizedMessage(), error);
+                Log.e(LOG_TAG, "[Thunderhead] Send Interaction SDK Error: " + error.getErrorMessage());
+            } catch (OneAPIError error) {
+                result.error(Integer.toString(error.getHttpStatusCode()), error.getLocalizedMessage(), error);
+                Log.e(LOG_TAG, "[Thunderhead] Send Interaction Api Error: " + error.getErrorMessage());
             }
         });
     }
 
-    private void sendResponseCode(String responseCode, String interactionPath, final Result result) {
+    private void sendResponseCode(final String responseCode, final String interactionPath, final Result result) {
         executor.submit(() -> {
             final OneResponseCodeRequest responseCodeRequest = new OneResponseCodeRequest.Builder()
                     .responseCode(new OneResponseCode(responseCode))
@@ -205,76 +188,53 @@ public class OnePlugin implements MethodCallHandler, FlutterPlugin {
 
             try {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    One.sendResponseCode(responseCodeRequest);
-                    result.success(null);
+                    One.sendResponseCode(true, responseCodeRequest);
                 } else {
-                    One.sendResponseCodeLegacySupport(responseCodeRequest);
-                    result.success(null);
+                    One.sendResponseCodeLegacySupport(true, responseCodeRequest);
                 }
+                result.success(null);
             } catch (ExecutionException error) {
                 result.error(Integer.toString(error.hashCode()), error.getLocalizedMessage(), error);
-                error.printStackTrace();
+                Log.e(LOG_TAG, "[Thunderhead] Send Response Code Completion Error: " + error.getCause());
+            } catch (OneSDKError error) {
+                result.error(Integer.toString(error.getSystemCode()), error.getLocalizedMessage(), error);
+                Log.e(LOG_TAG, "[Thunderhead] Send Response Code SDK Error: " + error.getErrorMessage());
+            } catch (OneAPIError error) {
+                result.error(Integer.toString(error.getHttpStatusCode()), error.getLocalizedMessage(), error);
+                Log.e(LOG_TAG, "[Thunderhead] Send Response Code Api Error: " + error.getErrorMessage());
             }
         });
     }
 
     private void optOut(MethodCall call, final Result result) {
-        OneOptOutConfiguration optOutConfiguration;
+        OneOptOutConfiguration.Builder builder = new OneOptOutConfiguration.Builder();
 
         final HashMap<String, Object> arguments = call.arguments();
         Boolean optOut = (Boolean) arguments.get("optOut");
-        List<String> options = (List<String>) arguments.get("options");
 
         if (optOut == null) {
             optOut = false;
         }
 
-        if (options != null && !options.isEmpty()) {
-            for (String optOutOption : options) {
-                if (optOutOption.equals("cityCountryDetection")) {
-                    Set<OneOptInOptions> optInOptions = EnumSet.noneOf(OneOptInOptions.class);
-                    optInOptions.add(OneOptInOptions.CITY_COUNTRY_DETECTION);
-                    optOutConfiguration = new OneOptOutConfiguration.Builder()
-                            .optOut(optOut)
-                            .optInOptions(optInOptions)
-                            .build();
-                    One.setOptOutConfiguration(optOutConfiguration);
-                }
-                if (optOutOption.equals("allTracking")) {
-                    // Configure all opt-out settings.
-
-                    // Configures opt-out settings for tracking.
-                    optOutConfiguration = new OneOptOutConfiguration.Builder()
-                            .optOut(optOut)
-                            .build();
-                    One.setOptOutConfiguration(optOutConfiguration);
-
-                    // Configures opt-out settings for other options.
-                    Set<OneOptInOptions> allOptInOptions = EnumSet.allOf(OneOptInOptions.class);
-                    optOutConfiguration = new OneOptOutConfiguration.Builder()
-                            .optOut(optOut)
-                            .optInOptions(allOptInOptions)
-                            .build();
-                    One.setOptOutConfiguration(optOutConfiguration);
-                }
-            }
+        //region Master switch
+        if (optOut) {
+            builder.optOut(true);
         } else {
-            // Opt out of everything if no `options` parameter is provided.
+            builder.optOut(false);
+            List<String> options = (List<String>) arguments.get("options");
+            EnumSet<OneOptInOptions> optInOptions = EnumSet.noneOf(OneOptInOptions.class);
 
-            // Configures opt-out settings for tracking.
-            optOutConfiguration = new OneOptOutConfiguration.Builder()
-                    .optOut(optOut)
-                    .build();
-            One.setOptOutConfiguration(optOutConfiguration);
-
-            // Configures opt-out settings for other options.
-            Set<OneOptInOptions> allOptInOptions = EnumSet.allOf(OneOptInOptions.class);
-            optOutConfiguration = new OneOptOutConfiguration.Builder()
-                    .optOut(optOut)
-                    .optInOptions(allOptInOptions)
-                    .build();
-            One.setOptOutConfiguration(optOutConfiguration);
+            if (options != null && !options.isEmpty()) {
+                for (String option : options) {
+                    if (option.equals("cityCountryDetection")) {
+                        optInOptions.add(OneOptInOptions.CITY_COUNTRY_DETECTION);
+                    }
+                }
+                builder.optInOptions(optInOptions);
+            }
         }
+        //endregion
+        One.setOptOutConfiguration(builder.build());
         result.success(null);
     }
 

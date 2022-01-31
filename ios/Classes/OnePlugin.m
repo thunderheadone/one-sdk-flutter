@@ -9,29 +9,29 @@ typedef NS_ENUM(NSUInteger, OnePluginErrorCode) {
 };
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
-  FlutterMethodChannel* channel = [FlutterMethodChannel
-      methodChannelWithName:@"one_sdk_flutter"
-            binaryMessenger:[registrar messenger]];
-  OnePlugin* instance = [[OnePlugin alloc] init];
-  [registrar addMethodCallDelegate:instance channel:channel];
+    FlutterMethodChannel* channel = [FlutterMethodChannel
+                                     methodChannelWithName:@"one_sdk_flutter"
+                                     binaryMessenger:[registrar messenger]];
+    OnePlugin* instance = [[OnePlugin alloc] init];
+    [registrar addMethodCallDelegate:instance channel:channel];
 }
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
-  if ([@"getPlatformVersion" isEqualToString:call.method]) {
-      result([@"iOS " stringByAppendingString:[[UIDevice currentDevice] systemVersion]]);
-  } else if ([@"initializeOne" isEqualToString:call.method]) {
-      [self initializeOne:call result:result];
-  } else if ([@"setLogLevel" isEqualToString:call.method]) {
-      [self setLogLevel:call result:result];
-  } else if ([@"sendInteraction" isEqualToString:call.method]) {
-      [self sendInteraction:call result:result];
-  } else if ([@"sendResponseCode" isEqualToString:call.method]) {
-      [self sendResponseCode:call result:result];
-  } else if ([@"optOut" isEqualToString:call.method]) {
-      [self optOut:call result:result];
-  } else {
-    result(FlutterMethodNotImplemented);
-  }
+    if ([@"getPlatformVersion" isEqualToString:call.method]) {
+        result([@"iOS " stringByAppendingString:[[UIDevice currentDevice] systemVersion]]);
+    } else if ([@"initializeOne" isEqualToString:call.method]) {
+        [self initializeOne:call result:result];
+    } else if ([@"setLogLevel" isEqualToString:call.method]) {
+        [self setLogLevel:call result:result];
+    } else if ([@"sendInteraction" isEqualToString:call.method]) {
+        [self sendInteraction:call result:result];
+    } else if ([@"sendResponseCode" isEqualToString:call.method]) {
+        [self sendResponseCode:call result:result];
+    } else if ([@"optOut" isEqualToString:call.method]) {
+        [self optOut:call result:result];
+    } else {
+        result(FlutterMethodNotImplemented);
+    }
 }
 
 - (void)initializeOne:(FlutterMethodCall *)call result:(FlutterResult) result
@@ -43,7 +43,7 @@ typedef NS_ENUM(NSUInteger, OnePluginErrorCode) {
     NSString *userId = call.arguments[@"userID"];
     NSString *hostName = call.arguments[@"host"];
     NSNumber *adminMode = call.arguments[@"adminMode"];
-
+    
     [One startSessionWithSK:siteKey
                         uri:touchpointURI
                      apiKey:apikey
@@ -70,7 +70,7 @@ typedef NS_ENUM(NSUInteger, OnePluginErrorCode) {
     if (!interactionPath.length) {
         return;
     }
-
+    
     if (properties != nil && [properties isKindOfClass:[NSDictionary class]] && properties.count) {
         [One sendInteraction:interactionPath withProperties:properties andBlock:^(NSDictionary *response, NSError *error) {
             if (error) {
@@ -117,7 +117,7 @@ typedef NS_ENUM(NSUInteger, OnePluginErrorCode) {
     NSNumber *optOutValue = call.arguments[@"optOut"];
     BOOL optOut = optOutValue.boolValue;
     NSArray *options = call.arguments[@"options"];
-
+    
     if (![options isKindOfClass:[NSNull class]] && [options isKindOfClass:[NSArray class]]) {
         if (options.count) {
             for (NSString *option in options) {
@@ -135,7 +135,7 @@ typedef NS_ENUM(NSUInteger, OnePluginErrorCode) {
         } else {
             [One opt:optOut ? Out : In forOptions:AllTracking];
         }
-    
+        
     } else {
         [One opt:optOut ? Out : In forOptions:AllTracking];
     }

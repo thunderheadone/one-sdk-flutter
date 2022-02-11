@@ -29,6 +29,10 @@ typedef NS_ENUM(NSUInteger, OnePluginErrorCode) {
         [self sendResponseCode:call result:result];
     } else if ([@"optOut" isEqualToString:call.method]) {
         [self optOut:call result:result];
+    } else if ([@"optOutCityCountryDetection" isEqualToString:call.method]) {
+        [self optOutCityCountryDetection:call result:result];
+    } else if ([@"optOutKeychainTidStorage" isEqualToString:call.method]) {
+        [self optOutKeychainTidStorage:call result:result];
     } else {
         result(FlutterMethodNotImplemented);
     }
@@ -116,29 +120,26 @@ typedef NS_ENUM(NSUInteger, OnePluginErrorCode) {
 {
     NSNumber *optOutValue = call.arguments[@"optOut"];
     BOOL optOut = optOutValue.boolValue;
-    NSArray *options = call.arguments[@"options"];
-    
-    if (![options isKindOfClass:[NSNull class]] && [options isKindOfClass:[NSArray class]]) {
-        if (options.count) {
-            for (NSString *option in options) {
-                NSString *lowercasedOpt = [option lowercaseString];
-                if ([lowercasedOpt isEqualToString:[@"keychainTidStorage" lowercaseString]]) {
-                    [One opt:optOut ? Out : In forOptions:KeychainTidStorage];
-                } else if ([lowercasedOpt isEqualToString:[@"pasteboardTidStorage" lowercaseString]]) {
-                    [One opt:optOut ? Out : In forOptions:PasteboardTidStorage];
-                } else if ([lowercasedOpt isEqualToString:[@"cityCountryDetection" lowercaseString]]) {
-                    [One opt:optOut ? Out : In forOptions:CityCountryDetection];
-                } else if ([lowercasedOpt isEqualToString:[@"allTracking" lowercaseString]]) {
-                    [One opt:optOut ? Out : In forOptions:AllTracking];
-                }
-            }
-        } else {
-            [One opt:optOut ? Out : In forOptions:AllTracking];
-        }
-        
-    } else {
-        [One opt:optOut ? Out : In forOptions:AllTracking];
-    }
+    [One opt:optOut ? Out : In forOptions:AllTracking];
+    result(nil);
+}
+
+- (void)optOutCityCountryDetection:(FlutterMethodCall *)call result:(FlutterResult) result
+{
+    // Calling this method opts the user back in to match Android wipe and replace behavior.
+    [One opt:In forOptions:AllTracking];
+
+    NSNumber *optOutValue = call.arguments[@"optOut"];
+    BOOL optOut = optOutValue.boolValue;
+    [One opt:optOut ? Out : In forOptions:CityCountryDetection];
+    result(nil);
+}
+
+- (void)optOutKeychainTidStorage:(FlutterMethodCall *)call result:(FlutterResult) result
+{
+    NSNumber *optOutValue = call.arguments[@"optOut"];
+    BOOL optOut = optOutValue.boolValue;
+    [One opt:optOut ? Out : In forOptions:KeychainTidStorage];
     result(nil);
 }
 

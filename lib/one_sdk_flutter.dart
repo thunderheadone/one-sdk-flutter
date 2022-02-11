@@ -83,46 +83,25 @@ class One {
   ///
   /// When opted out, tracking will stop and locally queued data will be removed.
   /// At any point you can opt a user back in by passing false into the same method.
-  static Future<void> optOut(bool optOut, [List<OneOptOptions> options]) async {
-    List<String> optOutList = [];
-    if (options != null) {
-      for (var optOutOption in options) {
-        optOutList.add(optOutOption.asString);
-      }
-    }
-    var optOutMap = <String, Object>{'optOut': optOut, 'options': optOutList};
+  static Future<void> optOut(bool optOut) async {
+    var optOutMap = <String, Object>{'optOut': optOut};
     await _channel.invokeMethod('optOut', optOutMap);
   }
-}
 
-/// OptOut configuration options.
-enum OneOptOptions {
-  /// Opts out of all tracking.
-  allTracking,
+  /// Configure optOut settings for city/country level tracking.
+  ///
+  /// Enabled by default.
+  ///
+  static Future<void> optOutCityCountryDetection(bool optOut) async {
+    var optOutMap = <String, Object>{'optOut': optOut};
+    await _channel.invokeMethod('optOutCityCountryDetection', optOutMap);
+  }
 
-  /// Use this option to opt an end-user out or in of all city/country level tracking.
-  cityCountryDetection,
-
-  /// iOS platform specific option to opt out of keychain storage.
-  iOS_keychainTidStorage,
-
-  /// iOS platform specific option to opt out of pasteboard tid storage.
-  iOS_pasteboardTidStorage
-}
-
-extension OneOptOptionsStringValue on OneOptOptions {
-  String get asString {
-    switch (this) {
-      case OneOptOptions.allTracking:
-        return "allTracking";
-      case OneOptOptions.cityCountryDetection:
-        return "cityCountryDetection";
-      case OneOptOptions.iOS_pasteboardTidStorage:
-        return "pasteboardTidStorage";
-      case OneOptOptions.iOS_keychainTidStorage:
-        return "keychainTidStorage";
-      default:
-        return "";
-    }
+  /// Configure iOS platform specific optOut settings for keychain tid storage.
+  ///
+  /// Enabled by default.
+  static Future<void> optOutKeychainTidStorage(bool optOut) async {
+    var optOutMap = <String, Object>{'optOut': optOut};
+    await _channel.invokeMethod('optOutKeychainTidStorage', optOutMap);
   }
 }

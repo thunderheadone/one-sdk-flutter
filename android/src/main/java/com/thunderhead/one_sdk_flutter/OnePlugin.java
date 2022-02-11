@@ -44,8 +44,8 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
  * OnePlugin
  */
 public class OnePlugin implements MethodCallHandler, FlutterPlugin {
-    protected static final String LOG_TAG = "OnePlugin";
     private MethodChannel methodChannel;
+    protected static final String LOG_TAG = "OnePlugin";
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
     /** Plugin registration. */
@@ -99,6 +99,8 @@ public class OnePlugin implements MethodCallHandler, FlutterPlugin {
                 initializeOne(call, result);
             } else if (call.method.equals("optOut")) {
                 optOut(call, result);
+            } else if (call.method.equals("optOutCityCountryDetection")) {
+                optOutCityCountryDetection(call, result);
             } else {
                 result.notImplemented();
             }
@@ -207,33 +209,34 @@ public class OnePlugin implements MethodCallHandler, FlutterPlugin {
     }
 
     private void optOut(MethodCall call, final Result result) {
-        OneOptOutConfiguration.Builder builder = new OneOptOutConfiguration.Builder();
-
         final HashMap<String, Object> arguments = call.arguments();
         Boolean optOut = (Boolean) arguments.get("optOut");
+        OneOptOutConfiguration.Builder builder = new OneOptOutConfiguration.Builder();
 
         if (optOut == null) {
             optOut = false;
         }
 
-        //region Master switch
-        if (optOut) {
-            builder.optOut(true);
-        } else {
-            builder.optOut(false);
-            List<String> options = (List<String>) arguments.get("options");
-            EnumSet<OneOptInOptions> optInOptions = EnumSet.noneOf(OneOptInOptions.class);
+        builder.optOut(optOut);
+        One.setOptOutConfiguration(builder.build());
+        result.success(null);
+    }
 
-            if (options != null && !options.isEmpty()) {
-                for (String option : options) {
-                    if (option.equals("cityCountryDetection")) {
-                        optInOptions.add(OneOptInOptions.CITY_COUNTRY_DETECTION);
-                    }
-                }
-                builder.optInOptions(optInOptions);
-            }
+    private void optOutCityCountryDetection(MethodCall call, final Result result) {
+        final HashMap<String, Object> arguments = call.arguments();
+        Boolean optOut = (Boolean) arguments.get("optOut");
+        OneOptOutConfiguration.Builder builder = new OneOptOutConfiguration.Builder();
+
+        if (optOut == null) {
+            optOut = false;
         }
-        //endregion
+
+        EnumSet<OneOptInOptions> optInOptions = EnumSet.noneOf(OneOptInOptions.class);
+        if (!optOut) {
+            optInOptions.add(OneOptInOptions.CITY_COUNTRY_DETECTION);
+        }
+        builder.optOut(false);
+        builder.optInOptions(optInOptions);
         One.setOptOutConfiguration(builder.build());
         result.success(null);
     }

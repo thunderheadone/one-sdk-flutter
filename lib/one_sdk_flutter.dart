@@ -91,7 +91,6 @@ class One {
   /// Configure optOut settings for city/country level tracking.
   ///
   /// Enabled by default.
-  ///
   static Future<void> optOutCityCountryDetection(bool optOut) async {
     var optOutMap = <String, Object>{'optOut': optOut};
     await _channel.invokeMethod('optOutCityCountryDetection', optOutMap);

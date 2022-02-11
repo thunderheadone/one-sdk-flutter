@@ -86,26 +86,25 @@ To opt an end-user out of all tracking options, when the end-user does not give 
 ```dart
 // Opts out of all tracking options.  
 One.optOut(true);
-// or
-One.optOut(true, [OneOptOptions.allTracking]);
-```
-
-To opt out of specific tracking options, you can pass an array of `OneOptOptions` parameters:
-```dart
-// Use this option to opt an end-user out or in of all city/country level tracking.
-One.optOut(true, [OneOptOptions.cityCountryDetection]);
-// iOS platform specific option to opt out of keychain storage.
-One.optOut(true, [OneOptOptions.iOS_keychainTidStorage]);
-// iOS platform specific option to opt out of pasteboard tid storage.
-One.optOut(true, [OneOptOptions.iOS_pasteboardTidStorage]);
 ```
 
 To opt back in, call the following method:
 ```dart
 // Opt in for all tracking options.
 One.optOut(false);
-// or
-One.optOut(false, [OneOptOptions.allTracking]);
+```
+
+#### Opt an end user out of city country level tracking
+To opt an end-user out of city/country level tracking, call the following method:
+```dart
+// Calling this method will opt the end-user back in for all tracking. 
+One.optOutCityCountryDetection(true);
+```
+
+#### Opt an end user out of keychain Tid storage (iOS only)
+To opt an end-user out of all keychain Tid storage, call the following method:
+```dart
+One.optOutKeychainTidStorage(true);
 ```
 
 ### Access debug information

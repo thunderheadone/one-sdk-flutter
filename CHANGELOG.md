@@ -1,6 +1,6 @@
 #### 1.0.0
-* [NEW] Added ability to opt out.
-* [NEW] Added ability to retrieve the Interaction response.
+* [NEW] Added ability to opt out of tracking.  For further details see [here](https://github.com/thunderheadone/one-sdk-flutter#opt-an-end-user-out-of-tracking)
+* [NEW] Added ability to retrieve the Interaction response. For further details see [here](https://github.com/thunderheadone/one-sdk-flutter#send-an-interaction)
 * [UPDATE] Updated ONE Flutter plugin to use the latest version of the [ONE SDK for iOS](https://github.com/thunderheadone/one-sdk-ios/releases/tag/9.0.0) v9.0.0.
 * [UPDATE] Updated ONE Flutter plugin to use the latest version of [ONE SDK for Android](https://github.com/thunderheadone/one-sdk-android/releases/tag/11.1.3) v11.1.3.
 

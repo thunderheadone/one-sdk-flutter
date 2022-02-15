@@ -1,4 +1,0 @@
-io/flutter/plugins/GeneratedPluginRegistrant.java
- io.flutter.plugins.GeneratedPluginRegistrant
-com/thunderhead/flutter_module_example/BuildConfig.java
- com.thunderhead.flutter_module_example.BuildConfig

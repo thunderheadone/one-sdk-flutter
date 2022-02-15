@@ -3,7 +3,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'one_sdk_flutter'
-  s.version          = '1.0.0'
+  s.version          = '1.1.0'
   s.summary          = 'One Flutter Plugin for the ONE SDK for iOS and Android'
   s.description      = <<-DESC
                         One Flutter Plugin for the ONE SDK for iOS and Android

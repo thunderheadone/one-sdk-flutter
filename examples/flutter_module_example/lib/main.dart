@@ -11,16 +11,16 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Example',
       theme: ThemeData(
-          // This is the theme of your application.
-          //
-          // Try running your application with "flutter run". You'll see the
-          // application has a blue toolbar. Then, without quitting the app, try
-          // changing the primarySwatch below to Colors.green and then invoke
-          // "hot reload" (press "r" in the console where you ran "flutter run",
-          // or simply save your changes to "hot reload" in a Flutter IDE).
-          // Notice that the counter didn't reset back to zero; the application
-          // is not restarted.
-          ),
+        // This is the theme of your application.
+        //
+        // Try running your application with "flutter run". You'll see the
+        // application has a blue toolbar. Then, without quitting the app, try
+        // changing the primarySwatch below to Colors.green and then invoke
+        // "hot reload" (press "r" in the console where you ran "flutter run",
+        // or simply save your changes to "hot reload" in a Flutter IDE).
+        // Notice that the counter didn't reset back to zero; the application
+        // is not restarted.
+      ),
       home: MyHomePage(title: 'Flutter Example'),
     );
   }
@@ -55,13 +55,19 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    One.initializeOne(
-        SITE_KEY, TOUCHPOINT, API_KEY, SHARED_SECRET, USER_ID, HOST, false);
-    One.setThunderheadLogLevel(true);
-    
-    // Calling this in `initState` is just for demonstration purposes.
-    // When to send these Interaction requests should be aligned with your business use cases rather than follow exactly this code placement.
-    One.sendInteraction("/home", null);
+    // One.optOut(true);
+
+    // Calling this in `initState()` for demonstration purposes.
+    One.initializeOne(SITE_KEY, TOUCHPOINT, API_KEY, SHARED_SECRET, USER_ID, HOST, false).then((_) {
+      One.setThunderheadLogLevel(true);
+
+      // When to send these Interaction requests should be aligned with your business use cases rather than follow exactly this code placement.
+      One.sendInteraction("/home").then((response) {
+        print('Interaction response tid = ${response[oneResponseTidKey]}');
+        print('Interaction response Interaction path = ${response[oneResponseInteractionPathKey]}');
+        print('Interaction response optimization points = ${response[oneResponseOptimizationPointsKey]}');
+      });
+    });
   }
 
   @override
@@ -74,10 +80,11 @@ class _MyHomePageState extends State<MyHomePage> {
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
-        backgroundColor: Color.fromARGB(255, 238, 81, 88),
+        backgroundColor: Color.fromARGB( 255, 238, 81, 88),
       ),
       backgroundColor: Color.fromRGBO(31, 29, 40, 1.0),
-      body: Center(
+      body:
+      Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
         child: Column(
@@ -101,16 +108,13 @@ class _MyHomePageState extends State<MyHomePage> {
             RaisedButton(
               splashColor: Colors.pink,
               textColor: Colors.purple,
-              color: Color.fromARGB(255, 238, 81, 88),
-              child: Text(
-                "Click to Navigate",
-                style: TextStyle(color: Colors.white),
-              ),
+              color: Color.fromARGB( 255, 238, 81, 88),
+              child: Text("Click to Navigate", style: TextStyle(color: Colors.white),),
               onPressed: () {
-                Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => SecondRoute()))
-                    // Send Interaction each time this view appears (when SecondRoute is popped of the view stack and returns to this view).
-                    // When to send these Interaction requests should be aligned with your business use cases rather than follow exactly this code placement.
+                Navigator
+                    .push(context, MaterialPageRoute(builder: (context) => SecondRoute()))
+                // Send Interaction each time this view appears (when SecondRoute is popped of the view stack and returns to this view).
+                // When to send these Interaction requests should be aligned with your business use cases rather than follow exactly this code placement.
                     .then((value) => One.sendInteraction("/home", null));
               },
             ),
@@ -132,25 +136,26 @@ class THImage extends StatelessWidget {
 
 class SecondRoute extends StatelessWidget {
   void _sendInteraction(BuildContext context) async {
-    var tid = await One.sendInteraction(
-        "/secondPageButton", {'email': 'user@address.com'});
-    var alert = AlertDialog(
-      title: Text("Tid Result"),
-      content: Text(tid),
-    );
+    One.sendInteraction("/secondPageButton", { 'email' : 'user@address.com' }).then((response) {
+      var alert = AlertDialog(
+        title: Text("Tid Result"),
+        content: Text(response[oneResponseTidKey]),
+      );
 
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return alert;
-        });
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return alert;
+          }
+      );
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     // Calling this in `build()` for demonstration purposes.
     // When to send these Interaction requests should be aligned with your business use cases rather than follow exactly this code placement.
-    One.sendInteraction("/secondPage", null);
+    One.sendInteraction("/secondPage");
 
     return Scaffold(
         appBar: AppBar(title: Text("Second Page")),
@@ -161,6 +166,8 @@ class SecondRoute extends StatelessWidget {
             onPressed: () {
               _sendInteraction(context);
             },
-            label: Text('Send Interaction')));
+            label: Text('Send Interaction')
+        )
+    );
   }
 }

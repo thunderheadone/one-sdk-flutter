@@ -55,12 +55,19 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    One.initializeOne(SITE_KEY, TOUCHPOINT, API_KEY, SHARED_SECRET, USER_ID, HOST, false);
-    One.setThunderheadLogLevel(true);
+    // One.optOut(true);
 
     // Calling this in `initState()` for demonstration purposes.
-    // When to send these Interaction requests should be aligned with your business use cases rather than follow exactly this code placement.
-    One.sendInteraction("/home", null);
+    One.initializeOne(SITE_KEY, TOUCHPOINT, API_KEY, SHARED_SECRET, USER_ID, HOST, false).then((_) {
+      One.setThunderheadLogLevel(true);
+        
+      // When to send these Interaction requests should be aligned with your business use cases rather than follow exactly this code placement.
+      One.sendInteraction("/home").then((response) {
+        print('Interaction response tid = ${response[oneResponseTidKey]}');
+        print('Interaction response Interaction path = ${response[oneResponseInteractionPathKey]}');
+        print('Interaction response optimization points = ${response[oneResponseOptimizationPointsKey]}');
+      });
+    });
   }
 
   @override
@@ -129,25 +136,26 @@ class THImage extends StatelessWidget {
 
 class SecondRoute extends StatelessWidget {
   void _sendInteraction(BuildContext context) async {
-    var tid = await One.sendInteraction("/secondPageButton", { 'email' : 'user@address.com' });
-    var alert = AlertDialog(
-      title: Text("Tid Result"),
-      content: Text(tid),
-    );
+    One.sendInteraction("/secondPageButton", { 'email' : 'user@address.com' }).then((response) {
+      var alert = AlertDialog(
+        title: Text("Tid Result"),
+        content: Text(response[oneResponseTidKey]),
+      );
 
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return alert;
-        }
-    );
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return alert;
+          }
+      );
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     // Calling this in `build()` for demonstration purposes.
     // When to send these Interaction requests should be aligned with your business use cases rather than follow exactly this code placement.
-    One.sendInteraction("/secondPage", null);
+    One.sendInteraction("/secondPage");
 
     return Scaffold(
       appBar: AppBar(title: Text("Second Page")),

@@ -54,6 +54,11 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+
+    // Resolves `files found with path 'lib/armeabi-v7a/libRSSupport.so` build time error.
+    packagingOptions {
+        pickFirst '**/*.so'
+    }
 }
 
 flutter {
